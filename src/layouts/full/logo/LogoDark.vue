@@ -1,6 +1,6 @@
 <template>
   <div class="logo">
-    <RouterLink to="/">
+    <RouterLink to="/dashboard">
         <text style="font-family: sans-serif; font-weight: bold; color: #212121; font-size: 18px;">Admin Panel</text>
       
     </RouterLink>

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainRoutes from './MainRoutes';
 import AuthRoutes from './AuthRoutes';
+import GuestRoutes from './GuestRoutes';
 import { useAuthStore } from '@/stores/auth';
 
 export const router = createRouter({
@@ -11,6 +12,7 @@ export const router = createRouter({
       component: () => import('@/views/pages/maintenance/error/Error404Page.vue')
     },
     MainRoutes,
+    GuestRoutes,
     AuthRoutes
   ]
 });

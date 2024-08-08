@@ -32,7 +32,7 @@ const sidebarItem: menu[] = [
   {
     title: 'Dashboard',
     icon: DashboardIcon,
-    to: '/dashboard/default'
+    to: '/dashboard'
   },
   { divider: true },
 
@@ -56,12 +56,12 @@ const sidebarItem: menu[] = [
   {
     title: 'Sample Page',
     icon: BrandChromeIcon,
-    to: '/starter'
+    to: '/dashboard/starter'
   },
   {
     title: 'Users',
     icon: BrandChromeIcon,
-    to: '/users'
+    to: '/dashboard/users'
   }
 ];
 
