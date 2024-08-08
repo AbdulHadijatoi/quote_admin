@@ -4,23 +4,29 @@
   <v-form ref="Regform" lazy-validation class="mt-7 loginForm">
     <v-row>
       <v-col cols="12" sm="6">
-        <v-text-field
-          v-model="volumen"
-          density="compact"
-          hide-details="auto"
-          variant="outlined"
-          color="primary"
-          label="Volumen de la carga (m3)"
-        ></v-text-field>
+        <v-autocomplete
+            v-model="unidad_de_medida_teu"
+            :items="unidad_de_medida_teus"
+            class="mx-auto"
+            density="compact"
+            placeholder="Unidad de medida TEU"
+            label="Unidad de medida TEU:"
+            theme="light"
+            variant="outlined"
+            auto-select-first
+            item-title="name"
+            item-value="id"
+            item-props
+          ></v-autocomplete>
       </v-col>
       <v-col cols="12" sm="6">
         <v-autocomplete
-            v-model="primera_importacion"
-            :items="primera_importacions"
+            v-model="tipo_mercancia"
+            :items="tipo_mercancias"
             class="mx-auto"
             density="compact"
-            placeholder="Primera importación"
-            label="Primera importación"
+            placeholder="Tipo de mercancía"
+            label="Tipo de mercancía:"
             theme="light"
             variant="outlined"
             auto-select-first
@@ -34,12 +40,12 @@
     <v-row>
       <v-col cols="12" sm="6">
         <v-text-field
-          v-model="peso_total"
+          v-model="precio_factura"
           density="compact"
           hide-details="auto"
           variant="outlined"
           color="primary"
-          label="Precio de la factura (USD)"
+          label="Precio de la factura (USD):"
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6">
@@ -62,15 +68,40 @@
     
     <v-row>
       <v-col cols="12" sm="6">
-        <v-text-field
-          v-model="precio_factura"
-          density="compact"
-          hide-details="auto"
-          variant="outlined"
-          color="primary"
-          label="Primera importación"
-        ></v-text-field>
+        <v-autocomplete
+            v-model="primera_importacion"
+            :items="primera_importacions"
+            class="mx-auto"
+            density="compact"
+            placeholder="Primera importación"
+            label="Tipo de mercancía:"
+            theme="light"
+            variant="outlined"
+            auto-select-first
+            item-title="name"
+            item-value="id"
+            item-props
+          ></v-autocomplete>
       </v-col>
+      <v-col cols="12" sm="6">
+        <v-autocomplete
+            v-model="ubicacion_destino"
+            :items="ubicacion_destinos"
+            class="mx-auto"
+            density="compact"
+            placeholder="Ubicación en Perú"
+            label="Ubicación en Perú"
+            theme="light"
+            variant="outlined"
+            auto-select-first
+            item-title="name"
+            item-value="id"
+            item-props
+          ></v-autocomplete>
+      </v-col>
+    </v-row>
+    
+    <v-row>
       <v-col cols="12" sm="6">
         <v-autocomplete
             v-model="incoterm"
@@ -87,35 +118,7 @@
             item-props
           ></v-autocomplete>
       </v-col>
-    </v-row>
-    
-    <v-row>
-      <v-col cols="12" sm="6">
-        <v-autocomplete
-            v-model="tipo_mercancia"
-            :items="tipo_mercancias"
-            class="mx-auto"
-            density="compact"
-            placeholder="Tipo Mercancia"
-            label="Tipo Mercancia"
-            theme="light"
-            variant="outlined"
-            auto-select-first
-            item-title="name"
-            item-value="id"
-            item-props
-          ></v-autocomplete>
-      </v-col>
-      <v-col cols="12" sm="6">
-        <v-text-field
-          v-model="ubicacion_destino"
-          density="compact"
-          hide-details="auto"
-          variant="outlined"
-          color="primary"
-          label="Ubicación en Perú"
-        ></v-text-field>
-      </v-col>
+
     </v-row>
 
 
@@ -141,19 +144,20 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-const email = ref('');
-const firstname = ref('');
-const lastname = ref('');
 
-
-const volumen = ref('');
-const peso_total = ref('');
 const precio_factura = ref('');
 const tipo_mercancia = ref('');
 const primera_importacion = ref('');
 const puerto_origen = ref('');
 const incoterm = ref('');
 const ubicacion_destino = ref('');
+const unidad_de_medida_teu = ref('');
+
+const unidad_de_medida_teus = ref([
+  {id: '20', name: '20 ST'},
+  {id: '40', name: '40 ST/HQ'},
+  {id: '40', name: '40 NOR'},
+]);
 
 const primera_importacions = ref([
   {id: 'SI', name: 'SI'},
