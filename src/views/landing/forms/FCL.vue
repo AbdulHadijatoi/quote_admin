@@ -1,143 +1,220 @@
 
 
 <template>
-  <v-form ref="Regform" lazy-validation class="mt-7 loginForm">
-    <v-row>
-      <v-col cols="12" sm="6">
-        <v-autocomplete
-            v-model="unidad_de_medida_teu"
-            :items="unidad_de_medida_teus"
-            class="mx-auto"
+  <v-form ref="Regform" lazy-validation class="mt-6 loginForm">
+
+    <!-- STEP#1 FIELDS -->
+    <template v-if="step === 1">
+      <v-row>
+        <v-col style="padding: 5px; margin: 0px" cols="12">
+          <v-text-field
+            v-model="full_name"
+            label="Full Name or Company Name"
+            required
             density="compact"
-            placeholder="Unidad de medida TEU"
-            label="Unidad de medida TEU:"
-            theme="light"
-            variant="outlined"
-            auto-select-first
-            item-title="name"
-            item-value="id"
-            item-props
-          ></v-autocomplete>
+            variant="filled"
+            hide-details="auto"
+            color="primary"
+          ></v-text-field>
+        </v-col>
+    
+        <v-col style="padding: 5px" cols="12" sm="6">
+          <v-autocomplete
+              :items="DNI_RUC"
+              density="compact"
+              variant="filled"
+              placeholder="DNI or RUC (As applicable)"
+              label="DNI or RUC (As applicable)"
+              auto-select-first
+              item-title="name"
+              item-value="id"
+              item-props
+              hide-details="auto"
+            ></v-autocomplete>
+        </v-col>
+        <v-col style="padding: 5px" cols="12" sm="6">
+          <v-text-field
+            v-model="dni_ruc_value"
+            label="Enter your DNI or RUC"
+            required
+            density="compact"
+            variant="filled"
+            hide-details="auto"
+            color="primary"
+          ></v-text-field>
+        </v-col>
+     
+        <v-col style="padding: 5px" cols="12" sm="6">
+          <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="Email Address / Username"
+            required
+            density="compact"
+            variant="filled"
+            hide-details="auto"
+            color="primary"
+          ></v-text-field>
+        </v-col>
+        
+        <v-col style="padding: 5px" cols="12" sm="6">
+          <v-text-field
+            v-model="phone"
+            label="Enter your phone number"
+            required
+            density="compact"
+            variant="filled"
+            hide-details="auto"
+            color="primary"
+          ></v-text-field>
+        </v-col>
+  
+        <v-col style="padding: 5px;" cols="12">
+          <v-text-field
+            v-model="address"
+            label="Enter your address"
+            required
+            density="compact"
+            variant="filled"
+            hide-details="auto"
+            color="primary"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+    </template>
+
+    <!-- STEP#2 FIELDS -->
+    <template v-else-if="step === 2">
+      <v-row>
+        <v-col style="padding: 5px" cols="12" sm="6">
+          <v-autocomplete
+              v-model="unit_of_measurement"
+              :items="unit_of_measurements"
+              class="mx-auto"
+              density="compact"
+              placeholder="Unidad de medida TEU"
+              label="Unidad de medida TEU:"
+              theme="light"
+              variant="filled"
+              auto-select-first
+              item-title="name"
+              item-value="id"
+              item-props
+              hide-details="auto"
+            ></v-autocomplete>
+        </v-col>
+        <v-col style="padding: 5px" cols="12" sm="6">
+          <v-autocomplete
+              v-model="type_of_merchandise"
+              :items="type_of_merchandises"
+              class="mx-auto"
+              density="compact"
+              placeholder="Tipo de mercancía"
+              label="Tipo de mercancía:"
+              theme="light"
+              variant="filled"
+              auto-select-first
+              item-title="name"
+              item-value="id"
+              item-props
+              hide-details="auto"
+            ></v-autocomplete>
+        </v-col>
+      
+        <v-col style="padding: 5px" cols="12" sm="6">
+          <v-text-field
+            v-model="total_weight"
+            density="compact"
+            hide-details="auto"
+            variant="filled"
+            color="primary"
+            label="Precio de la factura (USD):"
+          ></v-text-field>
+        </v-col>
+        <v-col style="padding: 5px" cols="12" sm="6">
+          <v-autocomplete
+              v-model="port_of_origin"
+              :items="port_of_origins"
+              class="mx-auto"
+              density="compact"
+              placeholder="Puerto de origen (POL)"
+              label="Puerto de origen (POL)"
+              theme="light"
+              variant="filled"
+              auto-select-first
+              item-title="name"
+              item-value="id"
+              item-props
+              hide-details="auto"
+            ></v-autocomplete>
+        </v-col>
+      
+        <v-col style="padding: 5px" cols="12" sm="6">
+          <v-autocomplete
+              v-model="first_import"
+              :items="first_imports"
+              class="mx-auto"
+              density="compact"
+              placeholder="Primera importación"
+              label="Tipo de mercancía:"
+              theme="light"
+              variant="filled"
+              auto-select-first
+              item-title="name"
+              item-value="id"
+              item-props
+              hide-details="auto"
+            ></v-autocomplete>
+        </v-col>
+        <v-col style="padding: 5px" cols="12" sm="6">
+          <v-autocomplete
+              v-model="destination_location"
+              :items="destination_locations"
+              class="mx-auto"
+              density="compact"
+              placeholder="Ubicación en Perú"
+              label="Ubicación en Perú"
+              theme="light"
+              variant="filled"
+              auto-select-first
+              item-title="name"
+              item-value="id"
+              item-props
+              hide-details="auto"
+            ></v-autocomplete>
+        </v-col>
+      
+        <v-col style="padding: 5px" cols="12" sm="6">
+          <v-autocomplete
+              v-model="incoterm"
+              :items="incoterms"
+              class="mx-auto"
+              density="compact"
+              placeholder="Incoterm"
+              label="Incoterm"
+              theme="light"
+              variant="filled"
+              auto-select-first
+              item-title="name"
+              item-value="id"
+              item-props
+              hide-details="auto"
+            ></v-autocomplete>
+        </v-col>
+      </v-row>
+    </template>
+
+    <v-row justify="space-between" class="mt-4">
+      <v-col cols="6" v-if="step === 2">
+        <v-btn color="primary" block variant="flat" size="large" @click="step--">Back</v-btn>
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-autocomplete
-            v-model="tipo_mercancia"
-            :items="tipo_mercancias"
-            class="mx-auto"
-            density="compact"
-            placeholder="Tipo de mercancía"
-            label="Tipo de mercancía:"
-            theme="light"
-            variant="outlined"
-            auto-select-first
-            item-title="name"
-            item-value="id"
-            item-props
-          ></v-autocomplete>
+      <v-col cols="12" v-if="step === 1">
+        <v-btn color="primary" block variant="flat" size="large" @click="step++">Next</v-btn>
+      </v-col>
+      <v-col cols="6" v-if="step === 2">
+        <v-btn color="primary" block variant="flat" size="large" @click="validate()">Calcular</v-btn>
       </v-col>
     </v-row>
-    
-    <v-row>
-      <v-col cols="12" sm="6">
-        <v-text-field
-          v-model="precio_factura"
-          density="compact"
-          hide-details="auto"
-          variant="outlined"
-          color="primary"
-          label="Precio de la factura (USD):"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12" sm="6">
-        <v-autocomplete
-            v-model="puerto_origen"
-            :items="puerto_origens"
-            class="mx-auto"
-            density="compact"
-            placeholder="Puerto de origen (POL)"
-            label="Puerto de origen (POL)"
-            theme="light"
-            variant="outlined"
-            auto-select-first
-            item-title="name"
-            item-value="id"
-            item-props
-          ></v-autocomplete>
-      </v-col>
-    </v-row>
-    
-    <v-row>
-      <v-col cols="12" sm="6">
-        <v-autocomplete
-            v-model="primera_importacion"
-            :items="primera_importacions"
-            class="mx-auto"
-            density="compact"
-            placeholder="Primera importación"
-            label="Tipo de mercancía:"
-            theme="light"
-            variant="outlined"
-            auto-select-first
-            item-title="name"
-            item-value="id"
-            item-props
-          ></v-autocomplete>
-      </v-col>
-      <v-col cols="12" sm="6">
-        <v-autocomplete
-            v-model="ubicacion_destino"
-            :items="ubicacion_destinos"
-            class="mx-auto"
-            density="compact"
-            placeholder="Ubicación en Perú"
-            label="Ubicación en Perú"
-            theme="light"
-            variant="outlined"
-            auto-select-first
-            item-title="name"
-            item-value="id"
-            item-props
-          ></v-autocomplete>
-      </v-col>
-    </v-row>
-    
-    <v-row>
-      <v-col cols="12" sm="6">
-        <v-autocomplete
-            v-model="incoterm"
-            :items="incoterms"
-            class="mx-auto"
-            density="compact"
-            placeholder="Incoterm"
-            label="Incoterm"
-            theme="light"
-            variant="outlined"
-            auto-select-first
-            item-title="name"
-            item-value="id"
-            item-props
-          ></v-autocomplete>
-      </v-col>
-
-    </v-row>
-
-
-
-
-
-    <!-- <v-text-field
-      v-model="email"
-      :rules="emailRules"
-      label="Email Address / Username"
-      class="mt-4 mb-4"
-      required
-      density="compact"
-      hide-details="auto"
-      variant="outlined"
-      color="primary"
-    ></v-text-field> -->
-    
-    <v-btn color="primary" block class="mt-2" variant="flat" size="large" @click="validate()">Calcular</v-btn>
   </v-form>
   
 </template>
@@ -145,21 +222,33 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const precio_factura = ref('');
-const tipo_mercancia = ref('');
-const primera_importacion = ref('');
-const puerto_origen = ref('');
-const incoterm = ref('');
-const ubicacion_destino = ref('');
-const unidad_de_medida_teu = ref('');
+const step = ref(1);
+const email = ref('');
+const full_name = ref('');
+const phone = ref('');
+const address = ref('');
+const dni_ruc_value = ref('');
+const DNI_RUC = ref([
+  {id: 1, name: 'DNI'},
+  {id: 2, name: 'RUC'},
+]);
 
-const unidad_de_medida_teus = ref([
+
+const total_weight = ref('');
+const type_of_merchandise = ref('');
+const first_import = ref('');
+const port_of_origin = ref('');
+const incoterm = ref('');
+const destination_location = ref('');
+const unit_of_measurement = ref('');
+
+const unit_of_measurements = ref([
   {id: '20', name: '20 ST'},
   {id: '40', name: '40 ST/HQ'},
   {id: '40', name: '40 NOR'},
 ]);
 
-const primera_importacions = ref([
+const first_imports = ref([
   {id: 'SI', name: 'SI'},
   {id: 'NO', name: 'NO'},
 ]);
@@ -168,7 +257,7 @@ const incoterms = ref([
   {id: 'FOB', name: 'FOB'}
 ]);
 
-const tipo_mercancias = ref([
+const type_of_merchandises = ref([
   { id: "Maquinaria", name: 'Tractores agricolas' },
   { id: "Maquinaria", name: 'Maquinaria de linea amarilla' },
   { id: "Maquinaria", name: 'Maquina cnc láser' },
@@ -230,14 +319,14 @@ const tipo_mercancias = ref([
   { id: "Mercancia general", name: 'otros productos en general' },
 ]);
 
-const puerto_origens = ref([
+const port_of_origins = ref([
   { id: 'QINGDAO', name: 'Qingdao - (QINGDAO)'},
   { id: 'SHENZHEN', name: 'Shenzhen - (SHENZHEN)'},
   { id: 'SHANGHAI', name: 'Shanghai - (SHANGHAI)'},
   { id: 'NINGBO', name: 'Ningbo - (NINGBO)'},
 ]);
 
-const ubicacion_destinos = ref([
+const destination_locations = ref([
   { id: 'zone1', name: 'Callao'},
   { id: 'zone1', name: 'Carmen de La Legua'},
   { id: 'zone1', name: 'San Miguel'},
@@ -293,3 +382,11 @@ function validate() {
   Regform.value.validate();
 }
 </script>
+
+
+<style>
+.v-field--variant-filled .v-field__overlay{
+  /* background: none; */
+  border-radius: 3px;
+}
+</style>

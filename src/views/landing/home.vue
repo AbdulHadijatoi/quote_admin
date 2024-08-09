@@ -41,7 +41,7 @@ const tab = ref('');
               </v-tabs-window-item>
               
               <v-tabs-window-item value="fcl_tab">
-                <h2 class="text-h4 mt-3">Details of your cargo (FCL)</h2>
+                <h2 class="text-h5 mt-5">Details of your cargo (FCL)</h2>
                 <FCL_FORM />
               </v-tabs-window-item>
             </v-tabs-window>
