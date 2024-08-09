@@ -51,7 +51,7 @@ function validate(values: any, { setErrors }: any) {
       class="pwdInput"
     ></v-text-field>
 
-    <div class="d-sm-flex align-center mt-2 mb-7 mb-sm-0">
+    <!-- <div class="d-sm-flex align-center mt-2 mb-7 mb-sm-0">
       <v-checkbox
         v-model="checkbox"
         :rules="[(v: any) => !!v || 'You must agree to continue!']"
@@ -64,18 +64,15 @@ function validate(values: any, { setErrors }: any) {
       <div class="ml-auto">
         <a href="javascript:void(0)" class="text-primary text-decoration-none">Forgot password?</a>
       </div>
-    </div>
-    <v-btn color="secondary" :loading="isSubmitting" block class="mt-2" variant="flat" size="large" :disabled="valid" type="submit">
+    </div> -->
+    <v-btn color="secondary" :loading="isSubmitting" block class="mt-7" variant="flat" size="large" :disabled="valid" type="submit">
       Sign In</v-btn
     >
     <div v-if="errors.apiError" class="mt-2">
       <v-alert color="error">{{ errors.apiError }}</v-alert>
     </div>
   </Form>
-  <div class="mt-5 text-right">
-    <v-divider />
-    <v-btn variant="plain" to="/auth/register" class="mt-2 text-capitalize mr-n2">Don't Have an account?</v-btn>
-  </div>
+ 
 </template>
 <style lang="scss">
 .custom-devider {
