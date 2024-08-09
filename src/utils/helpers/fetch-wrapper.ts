@@ -14,7 +14,7 @@ interface temp {
 }
 
 interface UserData {
-  username: string;
+  email: string;
   password: string;
 }
 

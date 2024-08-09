@@ -8,8 +8,8 @@ const checkbox = ref(false);
 const valid = ref(false);
 const show1 = ref(false);
 //const logform = ref();
-const password = ref('admin123');
-const username = ref('info@codedthemes.com');
+const password = ref('password');
+const email = ref('admin@gmail.com');
 const passwordRules = ref([
   (v: string) => !!v || 'Password is required',
   (v: string) => (v && v.length <= 10) || 'Password must be less than 10 characters'
@@ -19,16 +19,16 @@ const emailRules = ref([(v: string) => !!v || 'E-mail is required', (v: string) 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function validate(values: any, { setErrors }: any) {
   const authStore = useAuthStore();
-  return authStore.login(username.value, password.value).catch((error) => setErrors({ apiError: error }));
+  return authStore.login(email.value, password.value).catch((error) => setErrors({ apiError: error }));
 }
 </script>
 
 <template>
   <Form @submit="validate" class="mt-7 loginForm" v-slot="{ errors, isSubmitting }">
     <v-text-field
-      v-model="username"
+      v-model="email"
       :rules="emailRules"
-      label="Email Address / Username"
+      label="Email Address"
       class="mt-4 mb-8"
       required
       density="comfortable"
@@ -51,20 +51,6 @@ function validate(values: any, { setErrors }: any) {
       class="pwdInput"
     ></v-text-field>
 
-    <!-- <div class="d-sm-flex align-center mt-2 mb-7 mb-sm-0">
-      <v-checkbox
-        v-model="checkbox"
-        :rules="[(v: any) => !!v || 'You must agree to continue!']"
-        label="Remember me?"
-        required
-        color="primary"
-        class="ms-n2"
-        hide-details
-      ></v-checkbox>
-      <div class="ml-auto">
-        <a href="javascript:void(0)" class="text-primary text-decoration-none">Forgot password?</a>
-      </div>
-    </div> -->
     <v-btn color="secondary" :loading="isSubmitting" block class="mt-7" variant="flat" size="large" :disabled="valid" type="submit">
       Sign In</v-btn
     >
