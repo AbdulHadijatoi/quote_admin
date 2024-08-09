@@ -26,7 +26,7 @@ const tab = ref('');
             </v-col>
           </v-row>
 
-          <v-tabs class="mt-3" v-model="tab" slider-color="primary">
+          <v-tabs class="mt-3" v-model="tab" slider-color="secondary">
             <v-tab value="lcl_tab">Carga Suelta (LCL)</v-tab>
             <v-tab value="fcl_tab">Contenedor(es) (FCL)</v-tab>
           </v-tabs>
@@ -61,5 +61,9 @@ const tab = ref('');
   max-width: 600px;
   margin: auto 0;
   overflow: scroll;
+}
+.v-tab.v-tab.v-btn{
+  background: rgba(0,0,0,0.03);
+  margin-right: 1px;
 }
 </style>

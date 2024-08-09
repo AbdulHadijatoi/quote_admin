@@ -4,7 +4,7 @@
     <!-- STEP#1 FIELDS -->
     <template v-if="step === 1">
       <v-row>
-        <v-col style="padding: 5px; margin: 0px" cols="12">
+        <v-col style="padding: 5px; margin: 0px" cols="6">
           <v-text-field
             v-model="full_name"
             label="Full Name or Company Name"
@@ -12,7 +12,7 @@
             density="compact"
             variant="filled"
             hide-details="auto"
-            color="primary"
+            color="secondary"
           ></v-text-field>
         </v-col>
     
@@ -30,7 +30,7 @@
               hide-details="auto"
             ></v-autocomplete>
         </v-col>
-        <v-col style="padding: 5px" cols="12" sm="6">
+        <v-col style="padding: 5px" cols="12">
           <v-text-field
             v-model="dni_ruc_value"
             label="Enter your DNI or RUC"
@@ -38,7 +38,7 @@
             density="compact"
             variant="filled"
             hide-details="auto"
-            color="primary"
+            color="secondary"
           ></v-text-field>
         </v-col>
      
@@ -51,7 +51,7 @@
             density="compact"
             variant="filled"
             hide-details="auto"
-            color="primary"
+            color="secondary"
           ></v-text-field>
         </v-col>
         
@@ -63,7 +63,7 @@
             density="compact"
             variant="filled"
             hide-details="auto"
-            color="primary"
+            color="secondary"
           ></v-text-field>
         </v-col>
   
@@ -75,7 +75,7 @@
             density="compact"
             variant="filled"
             hide-details="auto"
-            color="primary"
+            color="secondary"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -90,7 +90,7 @@
             density="compact"
             variant="filled"
             hide-details="auto"
-            color="primary"
+            color="secondary"
             label="Volumen de la carga (m3)"
           ></v-text-field>
         </v-col>
@@ -116,7 +116,7 @@
             density="compact"
             variant="filled"
             hide-details="auto"
-            color="primary"
+            color="secondary"
             label="Precio de la factura (USD)"
           ></v-text-field>
         </v-col>
@@ -142,7 +142,7 @@
             density="compact"
             variant="filled"
             hide-details="auto"
-            color="primary"
+            color="secondary"
             label="Primera importación"
           ></v-text-field>
         </v-col>
@@ -183,7 +183,7 @@
             density="compact"
             variant="filled"
             hide-details="auto"
-            color="primary"
+            color="secondary"
             label="Ubicación en Perú"
           ></v-text-field>
         </v-col>
@@ -192,13 +192,13 @@
 
     <v-row justify="space-between" class="mt-4">
       <v-col cols="6" v-if="step === 2">
-        <v-btn color="primary" block variant="flat" size="large" @click="step--">Back</v-btn>
+        <v-btn color="secondary" block variant="flat" size="large" @click="step--">Back</v-btn>
       </v-col>
       <v-col cols="12" v-if="step === 1">
-        <v-btn color="primary" block variant="flat" size="large" @click="step++">Next</v-btn>
+        <v-btn color="secondary" block variant="flat" size="large" @click="step++">Next</v-btn>
       </v-col>
       <v-col cols="6" v-if="step === 2">
-        <v-btn color="primary" block variant="flat" size="large" @click="validate()">Calcular</v-btn>
+        <v-btn color="secondary" block variant="flat" size="large" @click="validate()">Calcular</v-btn>
       </v-col>
     </v-row>
 
@@ -365,7 +365,7 @@ function validate() {
 
 <style>
 .v-field--variant-filled .v-field__overlay{
-  /* background: none; */
+  background: none;
   border-radius: 3px;
 }
 </style>
