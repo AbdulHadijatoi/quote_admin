@@ -376,7 +376,7 @@ const destination_locations = ref([
 ]);
 
 const Regform = ref();
-// const emailRules = ref([(v: string) => !!v || 'E-mail is required', (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid']);
+const emailRules = ref([(v: string) => !!v || 'E-mail is required', (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid']);
 
 function validate() {
   Regform.value.validate();
