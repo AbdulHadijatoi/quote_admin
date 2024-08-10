@@ -132,7 +132,7 @@ function saveEdit() {
               <span class="text-h6">Employees Listing</span>
             </v-col>
             <v-col cols="auto">
-              <v-btn color="primary" @click="handleAddEmployee">Add Employee</v-btn>
+              <v-btn color="secondary" @click="handleAddEmployee">Add Employee</v-btn>
             </v-col>
           </v-row>
         </v-card-title>
@@ -218,7 +218,7 @@ function saveEdit() {
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="viewDialog = false">Close</v-btn>
+            <v-btn color="secondary" @click="viewDialog = false">Close</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -287,7 +287,7 @@ function saveEdit() {
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="saveEdit">Save</v-btn>
+            <v-btn color="secondary" @click="saveEdit">Save</v-btn>
             <v-btn @click="editDialog = false">Cancel</v-btn>
           </v-card-actions>
         </v-card>
@@ -357,7 +357,7 @@ function saveEdit() {
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="saveEdit">Save</v-btn>
+            <v-btn color="secondary" @click="saveEdit">Save</v-btn>
             <v-btn @click="addDialog = false">Cancel</v-btn>
           </v-card-actions>
         </v-card>
