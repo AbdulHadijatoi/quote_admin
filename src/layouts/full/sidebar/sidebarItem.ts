@@ -8,7 +8,9 @@ import {
   BugIcon,
   DashboardIcon,
   BrandChromeIcon,
-  HelpIcon
+  HelpIcon,
+  SettingsIcon,
+  UserIcon,
 } from 'vue-tabler-icons';
 
 export interface menu {
@@ -54,15 +56,15 @@ const sidebarItem: menu[] = [
   //   ]
   // },
   {
-    title: 'Sample Page',
-    icon: BrandChromeIcon,
-    to: '/dashboard/starter'
+    title: 'Users',
+    icon: UserIcon,
+    to: '/dashboard/users'
   },
   {
-    title: 'Users',
-    icon: BrandChromeIcon,
-    to: '/dashboard/users'
-  }
+    title: 'Setting',
+    icon: SettingsIcon,
+    to: '/dashboard/setting'
+  },
 ];
 
 export default sidebarItem;

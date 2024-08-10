@@ -6,25 +6,25 @@ const MainRoutes = {
   redirect: '/main/dashboard',
   component: () => import('@/layouts/full/FullLayout.vue'),
   children: [
-    // {
-    //   name: 'LandingPage',
-    //   path: '/',
-    //   component: () => import('@/views/dashboards/default/DefaultDashboard.vue')
-    // },
     {
       name: 'Default',
       path: '/dashboard',
-      component: () => import('@/views/dashboards/default/DefaultDashboard.vue')
+      component: () => import('@/views/dashboards/Dashboard.vue')
     },
     {
       name: 'Starter',
       path: '/dashboard/starter',
-      component: () => import('@/views/StarterPage.vue')
+      component: () => import('@/views/dashboards/StarterPage.vue')
     },
     {
       name: 'Users',
       path: '/dashboard/users',
-      component: () => import('@/views/Users.vue')
+      component: () => import('@/views/dashboards/Users.vue')
+    },
+    {
+      name: 'Setting',
+      path: '/dashboard/setting',
+      component: () => import('@/views/dashboards/Setting.vue')
     },
   ]
 };

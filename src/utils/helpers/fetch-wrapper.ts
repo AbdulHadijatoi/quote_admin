@@ -13,10 +13,10 @@ interface temp {
   body?: string;
 }
 
-interface UserData {
-  email: string;
-  password: string;
-}
+// interface UserData {
+//   email: string;
+//   password: string;
+// }
 
 function request(method: string) {
   return (url: string, body?: object) => {
@@ -46,7 +46,7 @@ function authHeader(url: string): Record<string, string> {
   }
 }
 
-function handleResponse(response: Response): Promise<UserData> {
+function handleResponse(response: Response) {
   return response.text().then((text: string) => {
     const data = text && JSON.parse(text);
 
@@ -60,8 +60,7 @@ function handleResponse(response: Response): Promise<UserData> {
       const error: string = (data && data.message) || response.statusText;
       return Promise.reject(error);
     }
-
-    // Ensure data is of type UserData
-    return data as UserData;
+    
+    return data;
   });
 }

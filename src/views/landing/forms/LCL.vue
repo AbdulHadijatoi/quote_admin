@@ -178,14 +178,19 @@
             ></v-autocomplete>
         </v-col>
         <v-col style="padding: 5px" cols="12" sm="6">
-          <v-text-field
-            v-model="destination_location"
-            density="compact"
-            variant="filled"
-            hide-details="auto"
-            color="secondary"
-            label="Ubicación en Perú"
-          ></v-text-field>
+          <v-autocomplete
+              v-model="destination_location"
+              :items="destination_locations"
+              density="compact"
+              variant="filled"
+              placeholder="Ubicación en Perú"
+              label="Ubicación en Perú"
+              auto-select-first
+              item-title="name"
+              item-value="id"
+              hide-details="auto"
+              item-props
+            />
         </v-col>
       </v-row>
     </template>

@@ -1,27 +1,39 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SettingsIcon, LogoutIcon, UserIcon } from 'vue-tabler-icons';
+import { SettingsIcon, LogoutIcon } from 'vue-tabler-icons';
 import { useAuthStore } from '@/stores/auth';
 
-const swt1 = ref(true);
-const swt2 = ref(false);
 const authStore = useAuthStore();
+const user = JSON.parse(localStorage.getItem('user') || '');
+function greetingMessage() {
+  const currentHour = new Date().getHours();
+  
+  if (currentHour >= 5 && currentHour < 12) {
+    return 'Good Morning';
+  } else if (currentHour >= 12 && currentHour < 17) {
+    return 'Good Afternoon';
+  } else if (currentHour >= 17 && currentHour < 21) {
+    return 'Good Evening';
+  } else {
+    return 'Good Night';
+  }
+}
 </script>
 
 <template>
   <div class="pa-4">
-    <h4 class="mb-n1">Good Morning, <span class="font-weight-regular">John Doe</span></h4>
-    <span class="text-subtitle-2 text-medium-emphasis">Project admin</span>
+    <h4 class="mb-n1">{{greetingMessage()}}, <span class="font-weight-regular">{{user?.name}}</span></h4>
+    <span class="text-subtitle-2 text-medium-emphasis">{{user?.role}}</span>
 
     <perfect-scrollbar>
       <v-list class="mt-3">
-        <v-list-item color="secondary" rounded="md">
+        <!-- <v-list-item color="secondary" rounded="md">
           <template v-slot:prepend>
             <SettingsIcon size="20" class="mr-2" />
           </template>
 
           <v-list-item-title class="text-subtitle-2"> Account Settings</v-list-item-title>
-        </v-list-item>
+        </v-list-item> -->
 
         
         <v-list-item @click="authStore.logout()" color="secondary" rounded="md">

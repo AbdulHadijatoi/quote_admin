@@ -4,15 +4,15 @@ import { ref, shallowRef } from 'vue';
 import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
 import UiParentCard from '@/components/shared/UiParentCard.vue';
 
-const page = ref({ title: 'Sample Page' });
+const page = ref({ title: 'Users' });
 const breadcrumbs = shallowRef([
   {
-    title: 'Others',
+    title: 'Dashboard',
     disabled: false,
     href: '#'
   },
   {
-    title: 'Sample Page',
+    title: 'Users',
     disabled: true,
     href: '#'
   }

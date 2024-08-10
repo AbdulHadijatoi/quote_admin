@@ -5,7 +5,7 @@ import { useCustomizerStore } from '../../../stores/customizer';
 import { SettingsIcon, Menu2Icon, UserIcon } from 'vue-tabler-icons';
 
 import ProfileDD from './ProfileDD.vue';
-
+const user = JSON.parse(localStorage.getItem('user') || '');
 const customizer = useCustomizerStore();
 const showSearch = ref(false);
 function searchbox() {
@@ -42,13 +42,13 @@ function searchbox() {
 
     <v-menu :close-on-content-click="false">
       <template v-slot:activator="{ props }">
-        <v-btn class="profileBtn text-primary" color="lightprimary" variant="flat" rounded="pill" v-bind="props">
-
+        <v-btn class="profileBtn text-secondary" color="lightprimary" variant="flat" rounded="pill" v-bind="props">
+          
             <template v-slot:prepend>
               <UserIcon size="20" />
             </template>
 
-          <span class="font-weight-regular">John Doe</span>
+          <span class="font-weight-regular">{{user?.name}}</span>
         </v-btn>
       </template>
       <v-sheet rounded="md" width="300" elevation="12">
