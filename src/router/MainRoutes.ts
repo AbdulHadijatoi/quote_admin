@@ -7,14 +7,29 @@ const MainRoutes = {
   component: () => import('@/layouts/full/FullLayout.vue'),
   children: [
     {
-      name: 'Default',
+      name: 'Dashboard',
       path: '/dashboard',
       component: () => import('@/views/dashboards/Dashboard.vue')
     },
     {
-      name: 'Starter',
-      path: '/dashboard/starter',
-      component: () => import('@/views/dashboards/StarterPage.vue')
+      name: 'Create Quote',
+      path: '/dashboard/quotes/create',
+      component: () => import('@/views/dashboards/CreateQuote.vue')
+    },
+    {
+      name: 'Quote History',
+      path: '/dashboard/quotes/history',
+      component: () => import('@/views/dashboards/QuoteHistory.vue')
+    },
+    {
+      name: 'Subscribers',
+      path: '/dashboard/subscribers',
+      component: () => import('@/views/dashboards/Subscribers.vue')
+    },
+    {
+      name: 'Permissions',
+      path: '/dashboard/permissions',
+      component: () => import('@/views/dashboards/Permissions.vue')
     },
     {
       name: 'Users',

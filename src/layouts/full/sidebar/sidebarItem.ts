@@ -1,16 +1,11 @@
 import {
-  CircleIcon,
-  WindmillIcon,
-  TypographyIcon,
-  ShadowIcon,
-  PaletteIcon,
-  KeyIcon,
-  BugIcon,
   DashboardIcon,
-  BrandChromeIcon,
-  HelpIcon,
   SettingsIcon,
   UserIcon,
+  LockIcon,
+  SubscriptIcon,
+  FormsIcon,
+  HistoryIcon,
 } from 'vue-tabler-icons';
 
 export interface menu {
@@ -37,7 +32,7 @@ const sidebarItem: menu[] = [
     to: '/dashboard'
   },
   { divider: true },
-
+  
   // {
   //   title: 'Authentication',
   //   icon: KeyIcon,
@@ -56,7 +51,27 @@ const sidebarItem: menu[] = [
   //   ]
   // },
   {
-    title: 'Users',
+    title: 'Create Quote',
+    icon: FormsIcon,
+    to: '/dashboard/quotes/create'
+  },
+  {
+    title: 'Quote History',
+    icon: HistoryIcon,
+    to: '/dashboard/quotes/history'
+  },
+  {
+    title: 'Subscribers',
+    icon: SubscriptIcon,
+    to: '/dashboard/subscribers'
+  },
+  {
+    title: 'Permissions',
+    icon: LockIcon,
+    to: '/dashboard/permissions'
+  },
+  {
+    title: 'Employees',
     icon: UserIcon,
     to: '/dashboard/users'
   },

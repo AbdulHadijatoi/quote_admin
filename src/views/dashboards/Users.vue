@@ -1,23 +1,6 @@
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue';
 
-import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
-import UiParentCard from '@/components/shared/UiParentCard.vue';
-
-const page = ref({ title: 'Users' });
-const breadcrumbs = shallowRef([
-  {
-    title: 'Dashboard',
-    disabled: false,
-    href: '#'
-  },
-  {
-    title: 'Users',
-    disabled: true,
-    href: '#'
-  }
-]);
-
 const headers = [
           {
             align: 'start',
@@ -43,7 +26,6 @@ const headers = [
 </script>
 
 <template>
-  <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
   <v-row>
     <v-col cols="12" md="12">
       <v-data-table :items="items"></v-data-table>
