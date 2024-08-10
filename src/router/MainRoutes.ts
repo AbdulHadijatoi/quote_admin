@@ -41,6 +41,11 @@ const MainRoutes = {
       path: '/dashboard/setting',
       component: () => import('@/views/dashboards/Setting.vue')
     },
+    {
+      name: 'Profile Setting',
+      path: '/dashboard/profile-setting',
+      component: () => import('@/views/dashboards/ProfileSetting.vue')
+    },
   ]
 };
 
