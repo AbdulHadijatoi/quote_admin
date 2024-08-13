@@ -6,7 +6,7 @@
       <v-row>
         <v-col style="padding: 5px; margin: 0px" cols="6">
           <v-text-field
-            v-model="full_name"
+            v-model="guest_name"
             label="Full Name or Company Name"
             required
             density="compact"
@@ -32,7 +32,7 @@
         </v-col>
         <v-col style="padding: 5px" cols="12">
           <v-text-field
-            v-model="dni_ruc_value"
+            v-model="dni_or_ruc_value"
             label="Enter your DNI or RUC"
             required
             density="compact"
@@ -44,7 +44,7 @@
      
         <v-col style="padding: 5px" cols="12" sm="6">
           <v-text-field
-            v-model="email"
+            v-model="guest_email"
             :rules="emailRules"
             label="Email Address / Username"
             required
@@ -57,7 +57,7 @@
         
         <v-col style="padding: 5px" cols="12" sm="6">
           <v-text-field
-            v-model="phone"
+            v-model="guest_phone"
             label="Enter your phone number"
             required
             density="compact"
@@ -69,7 +69,7 @@
   
         <v-col style="padding: 5px;" cols="12">
           <v-text-field
-            v-model="address"
+            v-model="guest_address"
             label="Enter your address"
             required
             density="compact"
@@ -122,7 +122,7 @@
         </v-col>
         <v-col style="padding: 5px" cols="12" sm="6">
           <v-autocomplete
-              v-model="port_of_origin"
+              v-model="origin_port"
               :items="port_of_origins"
               density="compact"
               variant="filled"
@@ -212,13 +212,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { getData, postData, getPdf, postPdf } from '@/utils/api';
 
 const step = ref(1);
-const email = ref('');
-const full_name = ref('');
-const phone = ref('');
-const address = ref('');
-const dni_ruc_value = ref('');
+const guest_email = ref('');
+const guest_name = ref('');
+const guest_phone = ref('');
+const guest_address = ref('');
+const dni_or_ruc_value = ref('');
 const DNI_RUC = ref([
   {id: 1, name: 'DNI'},
   {id: 2, name: 'RUC'},
@@ -229,13 +230,13 @@ const total_weight = ref('');
 const invoice_price = ref('');
 const type_of_merchandise = ref('');
 const first_import = ref('');
-const port_of_origin = ref('');
+const origin_port = ref('');
 const incoterm = ref('');
 const destination_location = ref('');
 
 const first_imports = ref([
-  {id: 'SI', name: 'SI'},
-  {id: 'NO', name: 'NO'},
+  {id: 1, name: 'SI'},
+  {id: 2, name: 'NO'},
 ]);
 
 const incoterms = ref([
@@ -243,65 +244,65 @@ const incoterms = ref([
 ]);
 
 const type_of_merchandises = ref([
-  { id: "Maquinaria", name: 'Tractores agricolas' },
-  { id: "Maquinaria", name: 'Maquinaria de linea amarilla' },
-  { id: "Maquinaria", name: 'Maquina cnc láser' },
-  { id: "Maquinaria", name: 'Maquina de construccion' },
-  { id: "Maquinaria", name: 'Bordadora computarizada' },
-  { id: "Maquinaria", name: 'Tornos' },
-  { id: "Maquinaria", name: 'Plataforma elevadora autopropulsada' },
-  { id: "Maquinaria", name: 'Demas maquina metalmecánica' },
-  { id: "Maquinaria", name: 'Demas maquinas agricolas' },
-  { id: "Maquinaria", name: 'Martillo hidraulico' },
-  { id: "Maquinaria", name: 'Maquinas tejedoras' },
-  { id: "Maquinaria", name: 'Maquina sopladora de botella' },
-  { id: "Maquinaria", name: 'Maquina de inyección' },
-  { id: "Maquinaria", name: 'Maquina Paletizadora' },
-  { id: "Maquinaria", name: 'Montacarga' },
-  { id: "Maquinaria", name: 'Maquinas para melamina' },
-  { id: "Maquinaria", name: 'Maquinas para mineria' },
+  { id: 1, name: 'Tractores agricolas' },
+  { id: 1, name: 'Maquinaria de linea amarilla' },
+  { id: 1, name: 'Maquina cnc láser' },
+  { id: 1, name: 'Maquina de construccion' },
+  { id: 1, name: 'Bordadora computarizada' },
+  { id: 1, name: 'Tornos' },
+  { id: 1, name: 'Plataforma elevadora autopropulsada' },
+  { id: 1, name: 'Demas maquina metalmecánica' },
+  { id: 1, name: 'Demas maquinas agricolas' },
+  { id: 1, name: 'Martillo hidraulico' },
+  { id: 1, name: 'Maquinas tejedoras' },
+  { id: 1, name: 'Maquina sopladora de botella' },
+  { id: 1, name: 'Maquina de inyección' },
+  { id: 1, name: 'Maquina Paletizadora' },
+  { id: 1, name: 'Montacarga' },
+  { id: 1, name: 'Maquinas para melamina' },
+  { id: 1, name: 'Maquinas para mineria' },
 
-  { id: "Productos textiles", name: 'Medias y ropa interior' },
-  { id: "Productos textiles", name: 'Sabanas' },
-  { id: "Productos textiles", name: 'Telas' },
-  { id: "Productos textiles", name: 'ropa en general' },
-  { id: "Productos textiles", name: 'zapatillas de capellada textil' },
-  { id: "Productos textiles", name: 'Edredones' },
-  { id: "Productos textiles", name: 'Otros textiles' },
+  { id: 2, name: 'Medias y ropa interior' },
+  { id: 2, name: 'Sabanas' },
+  { id: 2, name: 'Telas' },
+  { id: 2, name: 'ropa en general' },
+  { id: 2, name: 'zapatillas de capellada textil' },
+  { id: 2, name: 'Edredones' },
+  { id: 2, name: 'Otros textiles' },
 
-  { id: "Mercancia general", name: 'Articulos plasticos y su manufacturas' },
-  { id: "Mercancia general", name: 'Moldes de silicona' },
-  { id: "Mercancia general", name: 'Articulos de vidrio y su manufacturas' },
-  { id: "Mercancia general", name: 'papeleria' },
-  { id: "Mercancia general", name: 'manualidades y derivados ' },
-  { id: "Mercancia general", name: 'cera de soya' },
-  { id: "Mercancia general", name: 'Hilos' },
-  { id: "Mercancia general", name: 'Maquina de coser' },
-  { id: "Mercancia general", name: 'pantallas Led' },
-  { id: "Mercancia general", name: 'Tv' },
-  { id: "Mercancia general", name: 'Llantas' },
-  { id: "Mercancia general", name: 'Porcelanato' },
-  { id: "Mercancia general", name: 'Cuchillas para cortar' },
-  { id: "Mercancia general", name: 'accesorios para celular' },
-  { id: "Mercancia general", name: 'Tuberias de gas y accesorios' },
-  { id: "Mercancia general", name: 'Cerraduras' },
-  { id: "Mercancia general", name: 'Articulos de librería' },
-  { id: "Mercancia general", name: 'accesorios para coches' },
-  { id: "Mercancia general", name: 'Maquina de produccion de hielo' },
-  { id: "Mercancia general", name: 'Repuestos de maquinaria , coches , motos' },
-  { id: "Mercancia general", name: 'Rodajes' },
-  { id: "Mercancia general", name: 'manufacturas de metales ' },
-  { id: "Mercancia general", name: 'Demas auriculares' },
-  { id: "Mercancia general", name: 'electrodos de soldadura' },
-  { id: "Mercancia general", name: 'Imanes' },
-  { id: "Mercancia general", name: 'Perfiles' },
-  { id: "Mercancia general", name: 'Articulos deportivos' },
-  { id: "Mercancia general", name: 'Maquinas de soldadura' },
-  { id: "Mercancia general", name: 'carritos a bateria' },
-  { id: "Mercancia general", name: 'Motocicletas' },
-  { id: "Mercancia general", name: 'Cuatrimotos' },
-  { id: "Mercancia general", name: 'Maquina cnc chorro plasma' },
-  { id: "Mercancia general", name: 'otros productos en general' },
+  { id: 3, name: 'Articulos plasticos y su manufacturas' },
+  { id: 3, name: 'Moldes de silicona' },
+  { id: 3, name: 'Articulos de vidrio y su manufacturas' },
+  { id: 3, name: 'papeleria' },
+  { id: 3, name: 'manualidades y derivados ' },
+  { id: 3, name: 'cera de soya' },
+  { id: 3, name: 'Hilos' },
+  { id: 3, name: 'Maquina de coser' },
+  { id: 3, name: 'pantallas Led' },
+  { id: 3, name: 'Tv' },
+  { id: 3, name: 'Llantas' },
+  { id: 3, name: 'Porcelanato' },
+  { id: 3, name: 'Cuchillas para cortar' },
+  { id: 3, name: 'accesorios para celular' },
+  { id: 3, name: 'Tuberias de gas y accesorios' },
+  { id: 3, name: 'Cerraduras' },
+  { id: 3, name: 'Articulos de librería' },
+  { id: 3, name: 'accesorios para coches' },
+  { id: 3, name: 'Maquina de produccion de hielo' },
+  { id: 3, name: 'Repuestos de maquinaria , coches , motos' },
+  { id: 3, name: 'Rodajes' },
+  { id: 3, name: 'manufacturas de metales ' },
+  { id: 3, name: 'Demas auriculares' },
+  { id: 3, name: 'electrodos de soldadura' },
+  { id: 3, name: 'Imanes' },
+  { id: 3, name: 'Perfiles' },
+  { id: 3, name: 'Articulos deportivos' },
+  { id: 3, name: 'Maquinas de soldadura' },
+  { id: 3, name: 'carritos a bateria' },
+  { id: 3, name: 'Motocicletas' },
+  { id: 3, name: 'Cuatrimotos' },
+  { id: 3, name: 'Maquina cnc chorro plasma' },
+  { id: 3, name: 'otros productos en general' },
 ]);
 
 const port_of_origins = ref([
@@ -312,52 +313,52 @@ const port_of_origins = ref([
 ]);
 
 const destination_locations = ref([
-  { id: 'zone1', name: 'Callao'},
-  { id: 'zone1', name: 'Carmen de La Legua'},
-  { id: 'zone1', name: 'San Miguel'},
-  { id: 'zone1', name: 'La Perla'},
-  { id: 'zone1', name: 'Bellavista'},
-  { id: 'zone1', name: 'La Punta'},
-  { id: 'zone2', name: 'Magdalena'},
-  { id: 'zone2', name: 'Pueblo Libre'},
-  { id: 'zone2', name: 'Lince'},
-  { id: 'zone2', name: 'Cercado de Lima'},
-  { id: 'zone2', name: 'Breña'},
-  { id: 'zone2', name: 'Jesús María'},
-  { id: 'zone2', name: 'La Victoria'},
-  { id: 'zone2', name: 'San Martin de Porres'},
-  { id: 'zone2', name: 'Independencia'},
-  { id: 'zone2', name: 'Rímac'},
-  { id: 'zone2', name: 'Los Olivos'},
-  { id: 'zone2', name: 'Pro'},
-  { id: 'zone3', name: 'Ventanilla'},
-  { id: 'zone3', name: 'San Isidro'},
-  { id: 'zone3', name: 'San Borja'},
-  { id: 'zone3', name: 'San Luis'},
-  { id: 'zone3', name: 'Miraflores'},
-  { id: 'zone3', name: 'Surquillo'},
-  { id: 'zone3', name: 'Barranco'},
-  { id: 'zone3', name: 'Surco'},
-  { id: 'zone3', name: 'Ate'},
-  { id: 'zone3', name: 'Sta. Clara'},
-  { id: 'zone3', name: 'Comas'},
-  { id: 'zone3', name: 'Puente Piedra'},
-  { id: 'zone3', name: 'El Agustino'},
-  { id: 'zone3', name: 'Santa Anita'},
-  { id: 'zone3', name: 'San Juan de Lurigancho'},
-  { id: 'zone4', name: 'Ancón'},
-  { id: 'zone4', name: 'Chorrillos'},
-  { id: 'zone4', name: 'Villa El Salvador'},
-  { id: 'zone4', name: 'Villa Maria del Triunfo'},
-  { id: 'zone4', name: 'San Juan de Miraflores'},
-  { id: 'zone4', name: 'Carabayllo'},
-  { id: 'zone4', name: 'La Molina'},
-  { id: 'zone4', name: 'Cajamarquilla'},
-  { id: 'zone5', name: 'Lurín'},
-  { id: 'zone5', name: 'Pachacamac'},
-  { id: 'zone5', name: 'Chosica'},
-  { id: 'zone5', name: 'Huarochiri'},
-  { id: 'zone5', name: 'Huachipa'},
+  { id: 1, name: 'Callao'},
+  { id: 1, name: 'Carmen de La Legua'},
+  { id: 1, name: 'San Miguel'},
+  { id: 1, name: 'La Perla'},
+  { id: 1, name: 'Bellavista'},
+  { id: 1, name: 'La Punta'},
+  { id: 2, name: 'Magdalena'},
+  { id: 2, name: 'Pueblo Libre'},
+  { id: 2, name: 'Lince'},
+  { id: 2, name: 'Cercado de Lima'},
+  { id: 2, name: 'Breña'},
+  { id: 2, name: 'Jesús María'},
+  { id: 2, name: 'La Victoria'},
+  { id: 2, name: 'San Martin de Porres'},
+  { id: 2, name: 'Independencia'},
+  { id: 2, name: 'Rímac'},
+  { id: 2, name: 'Los Olivos'},
+  { id: 2, name: 'Pro'},
+  { id: 3, name: 'Ventanilla'},
+  { id: 3, name: 'San Isidro'},
+  { id: 3, name: 'San Borja'},
+  { id: 3, name: 'San Luis'},
+  { id: 3, name: 'Miraflores'},
+  { id: 3, name: 'Surquillo'},
+  { id: 3, name: 'Barranco'},
+  { id: 3, name: 'Surco'},
+  { id: 3, name: 'Ate'},
+  { id: 3, name: 'Sta. Clara'},
+  { id: 3, name: 'Comas'},
+  { id: 3, name: 'Puente Piedra'},
+  { id: 3, name: 'El Agustino'},
+  { id: 3, name: 'Santa Anita'},
+  { id: 3, name: 'San Juan de Lurigancho'},
+  { id: 4, name: 'Ancón'},
+  { id: 4, name: 'Chorrillos'},
+  { id: 4, name: 'Villa El Salvador'},
+  { id: 4, name: 'Villa Maria del Triunfo'},
+  { id: 4, name: 'San Juan de Miraflores'},
+  { id: 4, name: 'Carabayllo'},
+  { id: 4, name: 'La Molina'},
+  { id: 4, name: 'Cajamarquilla'},
+  { id: 5, name: 'Lurín'},
+  { id: 5, name: 'Pachacamac'},
+  { id: 5, name: 'Chosica'},
+  { id: 5, name: 'Huarochiri'},
+  { id: 5, name: 'Huachipa'},
 ]);
 
 const Regform = ref();
