@@ -1,5 +1,5 @@
 import { useAuthStore } from '@/stores/auth';
-import baseUrl from '@/utils/config';
+import {baseUrl} from '@/utils/config';
 
 export const fetchWrapper = {
   get: request('GET'),

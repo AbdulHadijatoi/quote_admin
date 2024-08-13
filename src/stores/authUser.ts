@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 import { fetchWrapper } from '@/utils/helpers/fetch-wrapper';
 
-import baseUrl from '@/utils/config';
+import {baseUrl} from '@/utils/config';
 
 export const useUsersStore = defineStore({
   id: 'Authuser',

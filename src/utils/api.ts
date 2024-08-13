@@ -1,6 +1,6 @@
 // src/utils/api.ts
 
-import baseUrl from './config';
+import {baseUrl} from './config';
 
 async function getData<T>(endpoint: string): Promise<T> {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -95,8 +95,27 @@ async function postPdf(endpoint: string, data: any): Promise<void> {
   URL.revokeObjectURL(url);
 }
 
+async function uploadImage<T>(endpoint: string, formData: FormData): Promise<T> {
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const token = user.token;
+
+  const response = await fetch(`${baseUrl}${endpoint}`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to upload image');
+  }
+
+  return response.json();
+}
+
 // Common export for all functions
-export { getData, postData, getPdf, postPdf };
+export { getData, postData, getPdf, postPdf, uploadImage };
 
 
 

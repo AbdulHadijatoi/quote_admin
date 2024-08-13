@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { router } from '@/router';
 import { fetchWrapper } from '@/utils/helpers/fetch-wrapper';
-import baseUrl from '@/utils/config';
+import {baseUrl} from '@/utils/config';
 
 export const useAuthStore = defineStore({
   id: 'auth',
