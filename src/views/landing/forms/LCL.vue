@@ -18,6 +18,7 @@
     
         <v-col style="padding: 5px" cols="12" sm="6">
           <v-autocomplete
+              v-model="dni_ruc_option"
               :items="DNI_RUC"
               density="compact"
               variant="filled"
@@ -25,7 +26,7 @@
               label="DNI or RUC (As applicable)"
               auto-select-first
               item-title="name"
-              item-value="id"
+              item-value="name"
               item-props
               hide-details="auto"
             ></v-autocomplete>
@@ -35,6 +36,7 @@
             v-model="dni_or_ruc_value"
             label="Enter your DNI or RUC"
             required
+            type="number"
             density="compact"
             variant="filled"
             hide-details="auto"
@@ -89,6 +91,7 @@
             v-model="volume"
             density="compact"
             variant="filled"
+            type="number"
             hide-details="auto"
             color="secondary"
             label="Volumen de la carga (m3)"
@@ -115,6 +118,7 @@
             v-model="total_weight"
             density="compact"
             variant="filled"
+            type="number"
             hide-details="auto"
             color="secondary"
             label="Precio de la factura (USD)"
@@ -133,6 +137,7 @@
               item-value="code"
               item-props
               hide-details="auto"
+              return-object
             ></v-autocomplete>
         </v-col>
     
@@ -141,6 +146,7 @@
             v-model="invoice_price"
             density="compact"
             variant="filled"
+            type="number"
             hide-details="auto"
             color="secondary"
             label="Primera importación"
@@ -159,6 +165,7 @@
               item-value="code"
               item-props
               hide-details="auto"
+              return-object
             ></v-autocomplete>
         </v-col>
     
@@ -175,6 +182,7 @@
               item-value="id"
               hide-details="auto"
               item-props
+              return-object
             ></v-autocomplete>
         </v-col>
         <v-col style="padding: 5px" cols="12" sm="6">
@@ -187,9 +195,10 @@
               label="Ubicación en Perú"
               auto-select-first
               item-title="name"
-              item-value="id"
+              item-value="zone_id"
               hide-details="auto"
               item-props
+              return-object
             />
         </v-col>
       </v-row>
@@ -216,22 +225,34 @@ import { getData, postData, getPdf, postPdf } from '@/utils/api';
 
 const downloadPdf = async () => {
   const formData = new FormData();
-  
+
+  formData.append('form_tab', 1);
   formData.append('guest_name', guest_name.value);
   formData.append('guest_email', guest_email.value);
   formData.append('guest_phone', guest_phone.value);
   formData.append('guest_address', guest_address.value);
+  formData.append('dni_ruc_option', dni_ruc_option.value);
   formData.append('dni_or_ruc_value', dni_or_ruc_value.value);
   formData.append('volume', volume.value);
   formData.append('total_weight', total_weight.value);
+  formData.append('invoice_price', invoice_price.value);
   formData.append('first_import', first_import.value);
-  formData.append('type_of_merchandise', type_of_merchandise.value);
-  formData.append('origin_port', origin_port.value);
-  formData.append('incoterm', incoterm.value);
-  formData.append('destination_location', destination_location.value);
-  
+  formData.append('type_of_merchandise', type_of_merchandise.value.product_category_id);
+  formData.append('type_of_merchandise_id', type_of_merchandise.value.id);
+  formData.append('type_of_merchandise_name', type_of_merchandise.value.name);
+  formData.append('origin_port', origin_port.value.id);
+  formData.append('origin_port_name', origin_port.value.name);
+  formData.append('incoterm', incoterm.value.id);
+  formData.append('incoterm_name', incoterm.value.name);
+  formData.append('destination_location', destination_location.value.zone_id);
+  formData.append('destination_location_id', destination_location.value.id);
+  formData.append('destination_location_name', destination_location.value.name);
+
   await postPdf('/shipping-quotes/create', formData);
+  // const response = await postData<any>('/shipping-quotes/create', formData);
+  // console.log(response);
 };
+
 
 const getConstantsData = async () => {
   try {
@@ -250,6 +271,7 @@ const guest_email = ref('');
 const guest_name = ref('');
 const guest_phone = ref('');
 const guest_address = ref('');
+const dni_ruc_option = ref('');
 const dni_or_ruc_value = ref('');
 const DNI_RUC = ref([
   {id: 1, name: 'DNI'},

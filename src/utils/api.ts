@@ -21,7 +21,7 @@ async function getData<T>(endpoint: string): Promise<T> {
   return response.json();
 }
 
-async function postData<T>(endpoint: string, data: any): Promise<T> {
+async function postData<T>(endpoint: string, formData: FormData): Promise<T> {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const token = user.token;
 
@@ -29,17 +29,18 @@ async function postData<T>(endpoint: string, data: any): Promise<T> {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
+      // Do not set Content-Type when sending FormData
     },
-    body: JSON.stringify(data),
+    body: formData,
   });
 
   if (!response.ok) {
     throw new Error('Failed to post data');
   }
 
-  return response.json();
+  return response.json(); // Return the JSON response
 }
+
 
 async function getPdf(endpoint: string): Promise<void> {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -61,7 +62,7 @@ async function getPdf(endpoint: string): Promise<void> {
   window.open(url, '_blank');
 }
 
-async function postPdf(endpoint: string, data: any): Promise<void> {
+async function postPdf(endpoint: string, data: FormData): Promise<void> {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const token = user.token;
 
@@ -69,31 +70,44 @@ async function postPdf(endpoint: string, data: any): Promise<void> {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
+      // Do not set 'Content-Type' for FormData; let the browser set it automatically
     },
-    body: JSON.stringify(data),
+    body: data,
   });
 
   if (!response.ok) {
     throw new Error('Failed to post PDF');
   }
 
+  // Check for correct Content-Type
+  const contentType = response.headers.get('Content-Type');
+  if (!contentType || !contentType.includes('application/pdf')) {
+    throw new Error('The server did not return a PDF');
+  }
+
+  // Create a blob from the response
   const blob = await response.blob();
-  const url = URL.createObjectURL(blob);
+  const url = window.URL.createObjectURL(blob);
+
+  // Create a link element
   const a = document.createElement('a');
-  const date = new Date();
-  const timestamp = date.getFullYear().toString() +
-                    (date.getMonth() + 1).toString().padStart(2, '0') +
-                    date.getDate().toString().padStart(2, '0') +
-                    date.getHours().toString().padStart(2, '0') +
-                    date.getMinutes().toString().padStart(2, '0') +
-                    date.getSeconds().toString().padStart(2, '0') +
-                    date.getMilliseconds().toString().padStart(3, '0');
+  a.style.display = 'none';
   a.href = url;
+
+  // Set a default filename
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   a.download = `shipping_quote_${timestamp}.pdf`;
-  a.click();
-  URL.revokeObjectURL(url);
+
+  // Append the link to the document body
+  document.body.appendChild(a);
+  a.click(); // Trigger the download
+
+  // Clean up the URL object and remove the link
+  window.URL.revokeObjectURL(url);
+  document.body.removeChild(a);
 }
+
+
 
 async function uploadImage<T>(endpoint: string, formData: FormData): Promise<T> {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
