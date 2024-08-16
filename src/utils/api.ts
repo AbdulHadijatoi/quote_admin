@@ -21,7 +21,7 @@ async function getData<T>(endpoint: string): Promise<T> {
   return response.json();
 }
 
-async function postData<T>(endpoint: string, formData: FormData): Promise<T> {
+async function postData<T>(endpoint: string, formData: FormData): Promise<any> {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const token = user.token;
 
