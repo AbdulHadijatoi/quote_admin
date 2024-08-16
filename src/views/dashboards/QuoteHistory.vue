@@ -4,7 +4,30 @@ import { CalendarIcon } from 'vue-tabler-icons'; // Importing icons from vue-tab
 // Import your postData function
 import { postData } from '@/utils/api';
 
-const quotes = ref([]);
+interface Quote {
+  id: number;
+  employee_name: string;
+  guest_name: string;
+  guest_email: string;
+  guest_phone: string;
+  guest_address: string;
+  quote_reference: string;
+  valid_until: string;
+  generated_by_employee: string;
+  dni_ruc_option: string;
+  dni_or_ruc_value: string;
+  volume: number;
+  total_weight: number;
+  invoice_price: number;
+  first_import: string;
+  incoterm: string;
+  measurement_unit: string;
+  origin_port: string;
+  type_of_merchandise: string;
+  destination_location: string;
+}
+
+const quotes = ref<Quote[]>([]);
 const isLoading = ref(false);
 const dateRange = ref({ start: '', end: '' });
 const nameFilter = ref('');
@@ -44,9 +67,9 @@ onMounted(() => {
 });
 
 // Watchers to re-fetch data whenever filters or page changes
-watch([nameFilter, emailFilter, dateRange, page], () => {
-  fetchShippingQuotes();
-});
+// watch([nameFilter, emailFilter, dateRange, page], () => {
+//   fetchShippingQuotes();
+// });
 
 const createQuote = () => {
   // Logic to create a new quote
@@ -61,13 +84,13 @@ const closeDialog = () => {
   dialog.value = false;
 };
 
-const deleteQuote = (id) => {
+const deleteQuote = (id: number) => {
   quotes.value = quotes.value.filter(quote => quote.id !== id);
   console.log('Quote deleted successfully.');
 };
 
 // Function to view quote details
-const viewQuoteDetails = (quoteId) => {
+const viewQuoteDetails = (quoteId: number) => {
   const quote = quotes.value.find((q) => q.id === quoteId);
   if (quote) {
     quoteDetails.value = [quote];
@@ -96,6 +119,7 @@ const viewQuoteDetails = (quoteId) => {
                   v-model="nameFilter"
                   label="Filter by Name"
                   outlined
+                  @keydown.enter="fetchShippingQuotes"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="4">
@@ -103,54 +127,8 @@ const viewQuoteDetails = (quoteId) => {
                   v-model="emailFilter"
                   label="Filter by Email"
                   outlined
+                  @keydown.enter="fetchShippingQuotes"
                 ></v-text-field>
-              </v-col>
-              <v-col cols="12" md="4">
-                <v-menu
-                  
-                  :close-on-content-click="false"
-                  transition="scale-transition"
-                  offset-y
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="dateRange.start"
-                      label="Start Date"
-
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                      outlined
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    v-model="dateRange.start"
-                    @input="$refs.endDatePicker.open()"
-                  ></v-date-picker>
-                </v-menu>
-                <v-menu
-                  
-                  :close-on-content-click="false"
-                  transition="scale-transition"
-                  offset-y
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      ref="endDatePicker"
-                      v-model="dateRange.end"
-                      label="End Date"
-
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                      outlined
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    v-model="dateRange.end"
-
-                  ></v-date-picker>
-                </v-menu>
               </v-col>
             </v-row>
           </v-form>
@@ -192,7 +170,7 @@ const viewQuoteDetails = (quoteId) => {
         <v-list>
           <v-list-item v-for="(detail, key) in quoteDetails[0]" :key="key">
             <v-list-item-content>
-              <v-list-item-title>{{ key.replace(/_/g, ' ') }}:</v-list-item-title>
+              <v-list-item-title>{{ key}}:</v-list-item-title>
               <v-list-item-subtitle>{{ detail }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>

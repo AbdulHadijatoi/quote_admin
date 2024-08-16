@@ -14,10 +14,10 @@ const headers = [
 
 
 const permissions = ref([
-  { id: 1, name: 'View Dashboard', assignedRoles: [1, 2] },
-  { id: 2, name: 'Edit Content', assignedRoles: [1, 2] },
-  { id: 3, name: 'Delete Content', assignedRoles: [1] },
-  { id: 4, name: 'Manage Users', assignedRoles: [1] },
+  { id: 1, name: 'View Dashboard', assignedRoles: [1, 2], assigned: '' },
+  { id: 2, name: 'Edit Content', assignedRoles: [1, 2], assigned: ''  },
+  { id: 3, name: 'Delete Content', assignedRoles: [1], assigned: ''  },
+  { id: 4, name: 'Manage Users', assignedRoles: [1], assigned: ''  },
 ]);
 
 const selectedRole = ref(null);
