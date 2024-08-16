@@ -3,14 +3,14 @@ import { ref } from 'vue';
 import { EyeIcon, TrashIcon, EditIcon } from 'vue-tabler-icons';
 
 // Table headers
-const headers = [
-  { key: 'name', title: 'Name', align: 'start' },
-  { key: 'email', title: 'Email' },
-  { key: 'phone', title: 'Phone' },
-  { key: 'dob', title: 'Date of Birth' },
-  { key: 'address', title: 'Address' },
+const headers = ref<any>([
+  { key: 'name', title: 'Name', align: 'start', sortable: true },
+  { key: 'email', title: 'Email', align: 'start', sortable: true },
+  { key: 'phone', title: 'Phone', align: 'start', sortable: true },
+  { key: 'dob', title: 'Date of Birth',align: 'start', sortable: true },
+  { key: 'address', title: 'Address',align: 'start', sortable: true },
   { key: 'actions', title: 'Actions', align: 'end', sortable: false },
-];
+]);
 
 interface User {
   id: number;

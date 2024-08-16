@@ -248,24 +248,24 @@ const downloadPdf = async () => {
   }
   
   if (type_of_merchandise.value) {
-    formData.append('type_of_merchandise', type_of_merchandise.value.product_category_id.toString());
-    formData.append('type_of_merchandise_id', type_of_merchandise.value.id.toString());
+    formData.append('type_of_merchandise', type_of_merchandise.value.product_category_id);
+    formData.append('type_of_merchandise_id', type_of_merchandise.value.id);
     formData.append('type_of_merchandise_name', type_of_merchandise.value.name);
   }
   
   if (origin_port.value) {
-    formData.append('origin_port', origin_port.value.id.toString());
+    formData.append('origin_port', origin_port.value.id);
     formData.append('origin_port_name', origin_port.value.name);
   }
 
   if (incoterm.value) {
-    formData.append('incoterm', incoterm.value.id.toString());
+    formData.append('incoterm', incoterm.value.id);
     formData.append('incoterm_name', incoterm.value.name);
   }
 
   if (destination_location.value) {
     formData.append('destination_location', destination_location.value.zone_id);
-    formData.append('destination_location_id', destination_location.value.id.toString());
+    formData.append('destination_location_id', destination_location.value.id);
     formData.append('destination_location_name', destination_location.value.name);
   }
 
@@ -299,14 +299,14 @@ interface Constant1 {
 }
 
 interface MerchandiseType {
-  id: number;
+  id: string;
   name: string;
-  product_category_id: number;
+  product_category_id: string;
   product_category_name: number;
 }
 
 interface DestinationLocation {
-  id: number;
+  id: string;
   name: string;
   zone_id: string;
   zone_name: string;
@@ -325,8 +325,8 @@ const guest_address = ref<string>('');
 const dni_ruc_option = ref<string>('');
 const dni_ruc_value = ref<string>('');
 const DNI_RUC = ref([
-  {id: 1, name: 'DNI'},
-  {id: 2, name: 'RUC'},
+  {id: "1", name: 'DNI'},
+  {id: "2", name: 'RUC'},
 ]);
 
 
@@ -342,11 +342,11 @@ const incoterms = ref<Constant1[]>([]);
 const measurementUnits = ref<Constant1[]>([]);
 const originPorts = ref<Constant1[]>([]);
 const destinationLocations = ref<DestinationLocation[]>([]);
-const merchandiseTypes = ref<DestinationLocation[]>([]);
+const merchandiseTypes = ref<MerchandiseType[]>([]);
 
 const first_imports = ref<Constant1[]>([
-  {id: 1, name: 'SI', code: ''},
-  {id: 2, name: 'NO', code: ''},
+  {id: "1", name: 'SI', code: ''},
+  {id: "2", name: 'NO', code: ''},
 ]);
 
 const Regform = ref();

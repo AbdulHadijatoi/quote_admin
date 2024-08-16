@@ -342,7 +342,7 @@ const first_imports = ref<Constant1[]>([
 const incoterms = ref<Constant1[]>([]);
 const originPorts = ref<Constant1[]>([]);
 const destinationLocations = ref<DestinationLocation[]>([]);
-const merchandiseTypes = ref<DestinationLocation[]>([]);
+const merchandiseTypes = ref<MerchandiseType[]>([]);
 
 
 const Regform = ref();

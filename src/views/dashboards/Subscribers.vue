@@ -82,8 +82,8 @@ onMounted(() => {
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn text @click="closeDeleteDialog">Cancel</v-btn>
-        <v-btn color="red" text @click="deleteSubscriber">Delete</v-btn>
+        <v-btn @click="closeDeleteDialog">Cancel</v-btn>
+        <v-btn color="red" @click="deleteSubscriber">Delete</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
