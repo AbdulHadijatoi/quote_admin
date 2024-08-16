@@ -11,7 +11,7 @@ const items = shallowRef([
 </script>
 
 <template>
-  <v-card elevation="0" class="bg-secondary overflow-hidden bubble-shape bubble-secondary-shape">
+  <v-card elevation="0" class="bg-primary overflow-hidden bubble-shape bubble-secondary-shape">
     <v-card-text>
       <div class="d-flex align-start mb-6">
         <v-btn icon rounded="sm" color="darksecondary" variant="flat">

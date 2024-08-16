@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue';
-import { CalendarIcon } from 'vue-tabler-icons'; // Importing icons from vue-tabler-icons
+import { useRouter } from 'vue-router'; // Import the useRouter hook
+import { CalendarIcon, DownloadIcon, DetailsIcon, LiveViewIcon, View360Icon, ViewfinderIcon, EyeIcon, PlusIcon } from 'vue-tabler-icons'; // Importing icons from vue-tabler-icons
 // Import your postData function
 import { postData } from '@/utils/api';
 
@@ -32,12 +33,12 @@ const isLoading = ref(false);
 const dateRange = ref({ start: '', end: '' });
 const nameFilter = ref('');
 const emailFilter = ref('');
-var perPage = ref(10); // Default number of results per page
-var page = ref(1); // Default page number
+const perPage = ref(10); // Default number of results per page
+const page = ref(1); // Default page number
 const totalItems = ref(0); // Total number of items from the API
 
 // Function to fetch shipping quotes
-const fetchShippingQuotes = async () => {
+const fetchData = async () => {
   isLoading.value = true;
 
   try {
@@ -61,19 +62,10 @@ const fetchShippingQuotes = async () => {
   }
 };
 
-// Call fetchShippingQuotes on component mount to load data initially
-onMounted(() => {
-  // fetchShippingQuotes();
-});
-
-// Watchers to re-fetch data whenever filters or page changes
-// watch([nameFilter, emailFilter, dateRange, page], () => {
-//   fetchShippingQuotes();
-// });
+const router = useRouter(); // Get the router instance
 
 const createQuote = () => {
-  // Logic to create a new quote
-  console.log('Create Quote button clicked.');
+  router.push('/dashboard/quotes/create'); // Navigate to the create quote page
 };
 
 const dialog = ref(false);
@@ -106,8 +98,8 @@ const viewQuoteDetails = (quoteId: number) => {
       <v-card variant="flat">
         <v-card-item>
           <div class="d-sm-flex align-center justify-space-between">
-            <v-btn color="secondary" @click="createQuote">Create Quote</v-btn>
-            <v-btn color="primary" @click="fetchShippingQuotes">Search</v-btn>
+            <v-card-title>Shipping Quotes List</v-card-title>
+            <v-btn color="secondary" @click="createQuote"><PlusIcon size="20" class="mr-2"/>Create Quote</v-btn>
           </div>
         </v-card-item>
         <v-divider></v-divider>
@@ -117,17 +109,17 @@ const viewQuoteDetails = (quoteId: number) => {
               <v-col cols="12" md="4">
                 <v-text-field
                   v-model="nameFilter"
-                  label="Filter by Name"
+                  label="Search by Name"
                   outlined
-                  @keydown.enter="fetchShippingQuotes"
+                  @keydown.enter="fetchData"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="4">
                 <v-text-field
                   v-model="emailFilter"
-                  label="Filter by Email"
+                  label="Search by Email"
                   outlined
-                  @keydown.enter="fetchShippingQuotes"
+                  @keydown.enter="fetchData"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -146,14 +138,20 @@ const viewQuoteDetails = (quoteId: number) => {
             :loading="isLoading"
             item-key="id"
 
-            :page.sync="page"
+
             :items-length="totalItems"
 
             v-model:items-per-page="perPage"
-            @update:options="fetchShippingQuotes()"
+            v-model:page="page"
+            @update:options="fetchData"
           >
             <template v-slot:item.actions="{ item }">
-              <v-btn @click="viewQuoteDetails(item.id)" color="secondary">View Details</v-btn>
+              <v-btn @click="viewQuoteDetails(item.id)" elevation="0"><EyeIcon size="20"/>
+                <v-tooltip activator="parent" location="start">View Details</v-tooltip>
+              </v-btn>
+              <v-btn @click="viewQuoteDetails(item.id)" elevation="0"><DownloadIcon size="20"/>
+                <v-tooltip activator="parent" location="start">Download Quote</v-tooltip>
+              </v-btn>
               <!-- <v-btn @click="deleteQuote(item.id)" color="red">Delete</v-btn> -->
             </template>
           </v-data-table-server>
