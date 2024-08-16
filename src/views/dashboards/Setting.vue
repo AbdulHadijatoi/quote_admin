@@ -91,7 +91,7 @@
           <v-row>
             <v-col cols="12" md="4">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2)" :loading="loading" color="secondary">
-                <v-toolbar color="#FFF" density="compact">
+                <v-toolbar color="" density="compact">
                   <v-toolbar-title>Ports of Origin</v-toolbar-title>
                   <v-spacer></v-spacer>
                   <v-btn><PlusIcon size="20" /></v-btn>
@@ -115,7 +115,7 @@
             
             <v-col cols="12" md="4">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
-                <v-toolbar color="#FFF" density="compact">
+                <v-toolbar color="" density="compact">
                   <v-toolbar-title>Destination Location</v-toolbar-title>
                   <v-spacer></v-spacer>
                   <v-btn><PlusIcon size="20" /></v-btn>
@@ -139,7 +139,7 @@
             
             <v-col cols="12" md="4">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
-                <v-toolbar color="#FFF" density="compact">
+                <v-toolbar color="" density="compact">
                   <v-toolbar-title>Type Of Merchandise</v-toolbar-title>
                   <v-spacer></v-spacer>
                   <v-btn><PlusIcon size="20" /></v-btn>
@@ -163,7 +163,7 @@
             
             <v-col cols="12" md="3">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.35)" :loading="loading">
-                <v-toolbar color="#FFF" density="compact">
+                <v-toolbar color="" density="compact">
                   <v-toolbar-title>Incoterm</v-toolbar-title>
                   <v-spacer></v-spacer>
                   <v-btn><PlusIcon size="20" /></v-btn>
@@ -188,7 +188,7 @@
            
             <v-col cols="12" md="3">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
-                <v-toolbar color="#FFF" density="compact">
+                <v-toolbar color="" density="compact">
                   <v-toolbar-title>Unit of Measurement</v-toolbar-title>
                   <v-spacer></v-spacer>
                   <v-btn><PlusIcon size="20" /></v-btn>
@@ -213,7 +213,7 @@
            
             <v-col cols="12" md="3">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
-                <v-toolbar color="#FFF" density="compact">
+                <v-toolbar color="" density="compact">
                   <v-toolbar-title>Product Categories</v-toolbar-title>
                   <v-spacer></v-spacer>
                   <v-btn><PlusIcon size="20" /></v-btn>
@@ -238,7 +238,7 @@
            
             <v-col cols="12" md="3">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
-                <v-toolbar color="#FFF" density="compact">
+                <v-toolbar color="" density="compact">
                   <v-toolbar-title>Zones</v-toolbar-title>
                   <v-spacer></v-spacer>
                   <v-btn><PlusIcon size="20" /></v-btn>

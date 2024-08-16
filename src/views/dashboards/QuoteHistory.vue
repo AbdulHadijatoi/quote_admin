@@ -109,18 +109,26 @@ const viewQuoteDetails = (quoteId: number) => {
               <v-col cols="12" md="4">
                 <v-text-field
                   v-model="nameFilter"
-                  label="Search by Name"
-                  outlined
+                  label="Search by Email"
+                  variant="outlined"
                   @keydown.enter="fetchData"
-                ></v-text-field>
+                >
+                  <template v-slot:append-inner>
+                    <SearchIcon size="20" class="mr-2" />
+                  </template>
+                </v-text-field>
               </v-col>
               <v-col cols="12" md="4">
                 <v-text-field
                   v-model="emailFilter"
                   label="Search by Email"
-                  outlined
+                  variant="outlined"
                   @keydown.enter="fetchData"
-                ></v-text-field>
+                >
+                  <template v-slot:append-inner>
+                    <SearchIcon size="20" class="mr-2" />
+                  </template>
+                </v-text-field>
               </v-col>
             </v-row>
           </v-form>
@@ -146,11 +154,11 @@ const viewQuoteDetails = (quoteId: number) => {
             @update:options="fetchData"
           >
             <template v-slot:item.actions="{ item }">
-              <v-btn @click="viewQuoteDetails(item.id)" elevation="0"><EyeIcon size="20"/>
-                <v-tooltip activator="parent" location="start">View Details</v-tooltip>
+              <v-btn icon @click="viewQuoteDetails(item.id)" elevation="0"><EyeIcon size="20"/>
+                <v-tooltip activator="parent" location="top">View</v-tooltip>
               </v-btn>
-              <v-btn @click="viewQuoteDetails(item.id)" elevation="0"><DownloadIcon size="20"/>
-                <v-tooltip activator="parent" location="start">Download Quote</v-tooltip>
+              <v-btn icon @click="viewQuoteDetails(item.id)" elevation="0"><DownloadIcon size="20"/>
+                <v-tooltip activator="parent" location="top">Download</v-tooltip>
               </v-btn>
               <!-- <v-btn @click="deleteQuote(item.id)" color="red">Delete</v-btn> -->
             </template>
