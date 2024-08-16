@@ -226,7 +226,7 @@ import { getData, postData, getPdf, postPdf } from '@/utils/api';
 const downloadPdf = async () => {
   const formData = new FormData();
 
-  formData.append('form_tab', 1);
+  formData.append('form_tab', '1');
   formData.append('guest_name', guest_name.value);
   formData.append('guest_email', guest_email.value);
   formData.append('guest_phone', guest_phone.value);
@@ -236,17 +236,43 @@ const downloadPdf = async () => {
   formData.append('volume', volume.value);
   formData.append('total_weight', total_weight.value);
   formData.append('invoice_price', invoice_price.value);
-  formData.append('first_import', first_import.value);
-  formData.append('type_of_merchandise', type_of_merchandise.value.product_category_id);
-  formData.append('type_of_merchandise_id', type_of_merchandise.value.id);
-  formData.append('type_of_merchandise_name', type_of_merchandise.value.name);
-  formData.append('origin_port', origin_port.value.id);
-  formData.append('origin_port_name', origin_port.value.name);
-  formData.append('incoterm', incoterm.value.id);
-  formData.append('incoterm_name', incoterm.value.name);
-  formData.append('destination_location', destination_location.value.zone_id);
-  formData.append('destination_location_id', destination_location.value.id);
-  formData.append('destination_location_name', destination_location.value.name);
+  // formData.append('first_import', first_import.value.id);
+  // formData.append('type_of_merchandise', type_of_merchandise.value.product_category_id);
+  // formData.append('type_of_merchandise_id', type_of_merchandise.value.id);
+  // formData.append('type_of_merchandise_name', type_of_merchandise.value.name);
+  // formData.append('origin_port', origin_port.value.id);
+  // formData.append('origin_port_name', origin_port.value.name);
+  // formData.append('incoterm', incoterm.value.id);
+  // formData.append('incoterm_name', incoterm.value.name);
+  // formData.append('destination_location', destination_location.value.zone_id);
+  // formData.append('destination_location_id', destination_location.value.id);
+  // formData.append('destination_location_name', destination_location.value.name);
+
+  if (first_import.value) {
+    formData.append('first_import', first_import.value.toString());
+  }
+  
+  if (type_of_merchandise.value) {
+    formData.append('type_of_merchandise', type_of_merchandise.value.product_category_id.toString());
+    formData.append('type_of_merchandise_id', type_of_merchandise.value.id.toString());
+    formData.append('type_of_merchandise_name', type_of_merchandise.value.name);
+  }
+
+  if (origin_port.value) {
+    formData.append('origin_port', origin_port.value.id.toString());
+    formData.append('origin_port_name', origin_port.value.name);
+  }
+  
+  if (incoterm.value) {
+    formData.append('incoterm', incoterm.value.id.toString());
+    formData.append('incoterm_name', incoterm.value.name);
+  }
+
+  if (destination_location.value) {
+    formData.append('destination_location', destination_location.value.zone_id.toString());
+    formData.append('destination_location_id', destination_location.value.id.toString());
+    formData.append('destination_location_name', destination_location.value.name);
+  }
 
   await postPdf('/shipping-quotes/create', formData);
   // const response = await postData<any>('/shipping-quotes/create', formData);
@@ -266,36 +292,57 @@ const getConstantsData = async () => {
   }
 };
 
+interface Constant1 {
+  id: number;
+  code: string;
+  name: string;
+}
+
+interface MerchandiseType {
+  id: number;
+  name: string;
+  product_category_id: number;
+  product_category_name: number;
+}
+
+interface DestinationLocation {
+  id: number;
+  name: string;
+  zone_id: number;
+  zone_name: string;
+}
+
+
 const step = ref(1);
-const guest_email = ref('');
-const guest_name = ref('');
-const guest_phone = ref('');
-const guest_address = ref('');
-const dni_ruc_option = ref('');
-const dni_or_ruc_value = ref('');
+const guest_email = ref<string>('');
+const guest_name = ref<string>('');
+const guest_phone = ref<string>('');
+const guest_address = ref<string>('');
+const dni_ruc_option = ref<string>('');
+const dni_or_ruc_value = ref<string>('');
 const DNI_RUC = ref([
   {id: 1, name: 'DNI'},
   {id: 2, name: 'RUC'},
 ]);
 
-const volume = ref('');
-const total_weight = ref('');
-const invoice_price = ref('');
-const type_of_merchandise = ref('');
-const first_import = ref('');
-const origin_port = ref('');
-const incoterm = ref('');
-const destination_location = ref('');
+const volume = ref<string>('');
+const total_weight = ref<string>('');
+const invoice_price = ref<string>('');
+const first_import = ref<Constant1 | null>(null); // Updated type
+const type_of_merchandise = ref<MerchandiseType | null>(null); // Updated type
+const origin_port = ref<Constant1 | null>(null); // Updated type
+const incoterm = ref<Constant1 | null>(null); // Updated type
+const destination_location = ref<DestinationLocation | null>(null); // Updated type
 
-const first_imports = ref([
-  {id: 1, name: 'SI'},
-  {id: 2, name: 'NO'},
+const first_imports = ref<Constant1[]>([
+  {id: 1, name: 'SI', code: ''},
+  {id: 2, name: 'NO', code: ''},
 ]);
 
-const incoterms = ref([]);
-const originPorts = ref([]);
-const destinationLocations = ref([]);
-const merchandiseTypes = ref([]);
+const incoterms = ref<Constant1[]>([]);
+const originPorts = ref<Constant1[]>([]);
+const destinationLocations = ref<DestinationLocation[]>([]);
+const merchandiseTypes = ref<DestinationLocation[]>([]);
 
 
 const Regform = ref();

@@ -10,7 +10,7 @@ const subscribers = ref([
 
 const isLoading = ref(false);
 const dialog = ref(false);
-const subscriberToDelete = ref(null);
+const subscriberToDelete = ref<number>(0);
 // const toast = useToast();
 
 const deleteSubscriber = () => {
@@ -24,7 +24,7 @@ const deleteSubscriber = () => {
   }
 };
 
-const openDeleteDialog = (id) => {
+const openDeleteDialog = (id: number) => {
   subscriberToDelete.value = id;
   dialog.value = true;
 };

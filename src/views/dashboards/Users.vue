@@ -12,8 +12,16 @@ const headers = [
   { key: 'actions', title: 'Actions', align: 'end', sortable: false },
 ];
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  dob: string;
+  address: string;
+}
 // Placeholder data for employees
-const items = ref([
+const items = ref<User[]>([
   { id: 1, name: 'John Doe', email: 'john@example.com', phone: '123-456-7890', dob: '1990-01-01', address: '123 Main St' },
   { id: 2, name: 'Jane Smith', email: 'jane@example.com', phone: '987-654-3210', dob: '1985-05-15', address: '456 Oak St' },
   { id: 3, name: 'Sam Wilson', email: 'sam@example.com', phone: '555-666-7777', dob: '1992-08-22', address: '789 Pine St' },
@@ -31,7 +39,7 @@ const viewDialog = ref(false);
 const editDialog = ref(false);
 const addDialog = ref(false);
 const deleteDialog = ref(false);
-const selectedEmployee = ref(null);
+const selectedEmployee = ref<User | null>(null);
 
 // For editing/adding employee details
 const editName = ref('');
@@ -43,12 +51,12 @@ const editPassword = ref('');
 const confirmPassword = ref('');
 
 // Action handlers
-function handleView(item) {
+function handleView(item: User) {
   selectedEmployee.value = item;
   viewDialog.value = true;
 }
 
-function handleDelete(item) {
+function handleDelete(item: User) {
   selectedEmployee.value = item;
   deleteDialog.value = true;
 }
@@ -56,12 +64,12 @@ function handleDelete(item) {
 function confirmDelete() {
   // Proceed with deletion
   console.log('Delete employee:', selectedEmployee.value);
-  items.value = items.value.filter(employee => employee.id !== selectedEmployee.value.id);
+  items.value = items.value.filter(employee => employee.id !== selectedEmployee.value?.id);
   totalItems.value = items.value.length;
   deleteDialog.value = false;
 }
 
-function handleEdit(item) {
+function handleEdit(item: User) {
   selectedEmployee.value = item;
 
   // Populate the edit fields with the selected employee's data

@@ -63,9 +63,9 @@
                     <v-chip v-if="index < 2" class="me-2" color="secondary" size="small" label>
                       {{ fileName }}
                     </v-chip>
-                    <span v-else-if="index === 2" class="text-overline text-grey-darken-3 mx-2">
+                    <!-- <span v-else-if="index === 2" class="text-overline text-grey-darken-3 mx-2">
                       +{{ front_background.length - 2 }} File(s)
-                    </span>
+                    </span> -->
                   </template>
                 </template>
               </v-file-input>
@@ -280,54 +280,43 @@ import { getData, uploadImage } from '@/utils/api';
 import { webUrl } from '@/utils/config';
 import { PlusIcon, PencilIcon } from 'vue-tabler-icons';
 
-const portHeaders = [
-  { title: 'Name', key: 'name' },
-  { title: 'Code', key: 'code' }
-];
+interface Constant1 {
+  id: number;
+  code: string;
+  name: string;
+}
 
-const incotermHeaders = [
-  { title: 'Name', key: 'name' },
-  { title: 'Code', key: 'code' }
-];
+interface MerchandiseType {
+  id: number;
+  name: string;
+  product_category_id: number;
+  product_category_name: number;
+}
 
-const merchandiseTypeHeaders = [
-  { title: 'Name', key: 'name' },
-  { title: 'Code', key: 'code' }
-];
+interface DestinationLocation {
+  id: number;
+  name: string;
+  zone_id: number;
+  zone_name: string;
+}
 
-const destinationLocationHeaders = [
-  { title: 'Name', key: 'name' },
-  { title: 'Code', key: 'code' }
-];
+interface SettingItem {
+  key: string;
+  value: string;
+}
 
-const unitHeaders = [
-  { title: 'Name', key: 'name' },
-  { title: 'Code', key: 'code' }
-];
-
-const productCategoryHeaders = [
-  { title: 'Name', key: 'name' },
-  { title: 'Code', key: 'code' }
-];
-
-const zoneHeaders = [
-  { title: 'Name', key: 'name' },
-  { title: 'Code', key: 'code' }
-];
-
-
-const incoterms = ref([]);
-const measurementUnits = ref([]);
-const originPorts = ref([]);
-const destinationLocations = ref([]);
-const merchandiseTypes = ref([]);
-const zones = ref([]);
-const productCategories = ref([]);
+const incoterms = ref<Constant1[]>([]);
+const measurementUnits = ref<Constant1[]>([]);
+const originPorts = ref<Constant1[]>([]);
+const destinationLocations = ref<DestinationLocation[]>([]);
+const merchandiseTypes = ref<MerchandiseType[]>([]);
+const zones = ref<Constant1[]>([]);
+const productCategories = ref<Constant1[]>([]);
 
 const front_background = ref<File | null>(null);
-const expiration_days = ref<number | null>(null);
-const expiration_notice_days = ref<number | null>(null);
-const allSetting = ref([]);
+const expiration_days = ref<string | null>('');
+const expiration_notice_days = ref<string | null>('');
+const allSetting = ref<SettingItem[]>([]);
 const backgroundImage = ref<string>('');
 const loading = ref<boolean>(false);
 
