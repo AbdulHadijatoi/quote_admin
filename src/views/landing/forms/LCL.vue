@@ -149,7 +149,7 @@
             type="number"
             hide-details="auto"
             color="secondary"
-            label="Primera importación"
+            label="precio factura"
           ></v-text-field>
         </v-col>
         <v-col style="padding: 5px" cols="12" sm="6">
