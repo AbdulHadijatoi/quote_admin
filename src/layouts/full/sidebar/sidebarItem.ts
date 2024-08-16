@@ -65,11 +65,11 @@ const sidebarItem: menu[] = [
     icon: SubscriptIcon,
     to: '/dashboard/subscribers'
   },
-  {
-    title: 'Permissions',
-    icon: LockIcon,
-    to: '/dashboard/permissions'
-  },
+  // {
+  //   title: 'Permissions',
+  //   icon: LockIcon,
+  //   to: '/dashboard/permissions'
+  // },
   {
     title: 'Employees',
     icon: UserIcon,

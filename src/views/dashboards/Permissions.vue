@@ -22,14 +22,6 @@ const permissions = ref([
 
 const selectedRole = ref(null);
 
-// Function to check if a permission is assigned to the selected role
-const filteredPermissions = computed(() => {
-  if (!selectedRole.value) return permissions.value;
-  return permissions.value.map((permission) => ({
-    ...permission,
-    assigned: permission.assignedRoles.includes(selectedRole.value.id),
-  }));
-});
 </script>
 
 <template>
@@ -57,7 +49,7 @@ const filteredPermissions = computed(() => {
         <v-card-text>
           <v-data-table
             :headers="headers"
-            :items="filteredPermissions"
+            :items="permissions"
             item-key="id"
           >
             <template v-slot:item.assigned="{ item }">

@@ -17,45 +17,6 @@
           <v-divider class="mb-4"></v-divider>
           <v-row>
             <v-col cols="12" md="3">
-              <h5 class="mb-3">Choose front page background</h5>
-              <v-file-input
-                v-model="front_background"
-                :show-size="1000"
-                color="deep-purple-accent-4"
-                label="Select Image"
-                placeholder="Selected Image"
-                variant="outlined"
-                counter
-              >
-                <template v-slot:selection="{ fileNames }">
-                  <template v-for="(fileName, index) in fileNames" :key="fileName">
-                    <v-chip v-if="index < 2" class="me-2" color="deep-purple-accent-4" size="small" label>
-                      {{ fileName }}
-                    </v-chip>
-                    <span v-else-if="index === 2" class="text-overline text-grey-darken-3 mx-2">
-                      +{{ front_background.length - 2 }} File(s)
-                    </span>
-                  </template>
-                </template>
-              </v-file-input>
-            </v-col>
-            <v-col cols="12" md="3">
-              <h5 class="mb-3">Preview</h5>
-              <v-card v-if="backgroundImage" class="d-flex align-items-center justify-center" style="height: 150px;" flat>
-                <v-img :src="backgroundImage" alt="Selected Image" contain style="height: 100%; width: 100%;" />
-              </v-card>
-              <v-card v-else class="d-flex align-items-center justify-center" style="height: 150px; background-color: #f5f5f5;" flat>
-                <span>No image selected</span>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-card-text>
-
-        <v-card-text class="pb-15">
-          <h2 class="my-4">Quote Expiration Days</h2>
-          <v-divider class="mb-4"></v-divider>
-          <v-row>
-            <v-col cols="12" md="3">
               <h5 class="mb-3">Expiration Days</h5>
               <v-text-field
                 v-model="expiration_days"
@@ -64,6 +25,7 @@
                 density="compact"
                 variant="outlined"
                 hide-details="auto"
+                :loading="loading"
                 color="secondary"
               ></v-text-field>
             </v-col>
@@ -77,8 +39,45 @@
                 density="compact"
                 variant="outlined"
                 hide-details="auto"
+                :loading="loading"
                 color="secondary"
               ></v-text-field>
+            </v-col>
+
+            <v-col cols="12" md="3">
+              <h5 class="mb-3">Choose front page background</h5>
+              <v-file-input
+                v-model="front_background"
+                :show-size="1000"
+                color="secondary"
+                label="Select Image"
+                placeholder="Selected Image"
+                variant="outlined"
+                density="compact"
+                
+                :loading="loading"
+                counter
+              >
+                <template v-slot:selection="{ fileNames }">
+                  <template v-for="(fileName, index) in fileNames" :key="fileName">
+                    <v-chip v-if="index < 2" class="me-2" color="secondary" size="small" label>
+                      {{ fileName }}
+                    </v-chip>
+                    <span v-else-if="index === 2" class="text-overline text-grey-darken-3 mx-2">
+                      +{{ front_background.length - 2 }} File(s)
+                    </span>
+                  </template>
+                </template>
+              </v-file-input>
+            </v-col>
+            <v-col cols="12" md="3">
+              <h5 class="mb-3">Preview</h5>
+              <v-card v-if="backgroundImage" class="d-flex align-items-center justify-center" style="height: 150px; overflow: hidden;" flat>
+                <v-img :src="backgroundImage" alt="Selected Image" cover />
+              </v-card>
+              <v-card v-else class="d-flex align-items-center justify-center" style="height: 150px; background-color: #f5f5f5;" flat>
+                <span>No image selected</span>
+              </v-card>
             </v-col>
           </v-row>
         </v-card-text>
@@ -87,99 +86,185 @@
         
         <v-divider></v-divider>
         <v-card-text>
-          <h2 class="mb-4">Constants Data</h2>
-          <v-divider class="mb-4"></v-divider>
+          <!-- <h2 class="mb-4">Constants Data</h2> -->
+          <!-- <v-divider class="mb-4"></v-divider> -->
           <v-row>
+            <v-col cols="12" md="4">
+              <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2)" :loading="loading" color="secondary">
+                <v-toolbar color="#FFF" density="compact">
+                  <v-toolbar-title>Ports of Origin</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-btn><PlusIcon size="20" /></v-btn>
+                </v-toolbar>
+                <v-list lines="two" height="300px" style="overflow: scroll;">
+                    <v-list-item
+                      v-for="item in originPorts"
+                      :key="item.id"
+                      :subtitle="item.code"
+                      :title="item.name"
+                    >
+                    <template v-slot:append>
+                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
+                    </template>
+                  </v-list-item>
+  
+                  <v-divider inset></v-divider>
+                </v-list>
+              </v-card>
+            </v-col>
+            
+            <v-col cols="12" md="4">
+              <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
+                <v-toolbar color="#FFF" density="compact">
+                  <v-toolbar-title>Destination Location</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-btn><PlusIcon size="20" /></v-btn>
+                </v-toolbar>
+                <v-list lines="two" height="300px" style="overflow: scroll;">
+                    <v-list-item
+                      v-for="item in destinationLocations"
+                      :key="item.id"
+                      :subtitle="item.zone_name"
+                      :title="item.name"
+                    >
+                    <template v-slot:append>
+                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
+                    </template>
+                  </v-list-item>
+  
+                  <v-divider inset></v-divider>
+                </v-list>
+              </v-card>
+            </v-col>
+            
+            <v-col cols="12" md="4">
+              <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
+                <v-toolbar color="#FFF" density="compact">
+                  <v-toolbar-title>Type Of Merchandise</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-btn><PlusIcon size="20" /></v-btn>
+                </v-toolbar>
+                <v-list lines="two" height="300px" style="overflow: scroll;">
+                    <v-list-item
+                      v-for="item in merchandiseTypes"
+                      :key="item.id"
+                      :subtitle="item.product_category_name"
+                      :title="item.name"
+                    >
+                    <template v-slot:append>
+                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
+                    </template>
+                  </v-list-item>
+  
+                  <v-divider inset></v-divider>
+                </v-list>
+              </v-card>
+            </v-col>
+            
             <v-col cols="12" md="3">
-              <h5 class="mb-2">Port Of Origin</h5>
-              <v-data-table
-                :headers="portHeaders"
-                :items="originPorts"
-                :items-per-page="10"
-                class="elevation-1"
-                style="max-height: 300px; overflow-y: auto;"
-              >
-               
-              </v-data-table>
+              <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.35)" :loading="loading">
+                <v-toolbar color="#FFF" density="compact">
+                  <v-toolbar-title>Incoterm</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-btn><PlusIcon size="20" /></v-btn>
+                </v-toolbar>
+                <v-list lines="two" height="300px" style="overflow: scroll;">
+                    <v-list-item
+                      v-for="item in incoterms"
+                      :key="item.id"
+                      :subtitle="item.code"
+                      :title="item.name"
+                    >
+                    <template v-slot:append>
+                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
+                    </template>
+                  </v-list-item>
+  
+                  <v-divider inset></v-divider>
+                </v-list>
+              </v-card>
             </v-col>
 
+           
             <v-col cols="12" md="3">
-              <h5 class="mb-2">Incoterm</h5>
-              <v-data-table
-                :headers="incotermHeaders"
-                :items="incoterms"
-                :items-per-page="10"
-                class="elevation-1"
-                style="max-height: 300px; overflow-y: auto;"
-              >
-               
-              </v-data-table>
+              <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
+                <v-toolbar color="#FFF" density="compact">
+                  <v-toolbar-title>Unit of Measurement</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-btn><PlusIcon size="20" /></v-btn>
+                </v-toolbar>
+                <v-list lines="two" height="300px" style="overflow: scroll;">
+                    <v-list-item
+                      v-for="item in measurementUnits"
+                      :key="item.id"
+                      :subtitle="item.code"
+                      :title="item.name"
+                    >
+                    <template v-slot:append>
+                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
+                    </template>
+                  </v-list-item>
+  
+                  <v-divider inset></v-divider>
+                </v-list>
+              </v-card>
             </v-col>
 
+           
             <v-col cols="12" md="3">
-              <h5 class="mb-2">Type Of Merchandise</h5>
-              <v-data-table
-                :headers="merchandiseTypeHeaders"
-                :items="merchandiseTypes"
-                :items-per-page="10"
-                class="elevation-1"
-                style="max-height: 300px; overflow-y: auto;"
-              >
-               
-              </v-data-table>
+              <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
+                <v-toolbar color="#FFF" density="compact">
+                  <v-toolbar-title>Product Categories</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-btn><PlusIcon size="20" /></v-btn>
+                </v-toolbar>
+                <v-list lines="two" height="300px" style="overflow: scroll;">
+                    <v-list-item
+                      v-for="item in productCategories"
+                      :key="item.id"
+                      :subtitle="item.code"
+                      :title="item.name"
+                    >
+                    <template v-slot:append>
+                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
+                    </template>
+                  </v-list-item>
+  
+                  <v-divider inset></v-divider>
+                </v-list>
+              </v-card>
             </v-col>
 
+           
             <v-col cols="12" md="3">
-              <h5 class="mb-2">Destination Location</h5>
-              <v-data-table
-                :headers="destinationLocationHeaders"
-                :items="destinationLocations"
-                :items-per-page="10"
-                class="elevation-1"
-                style="max-height: 300px; overflow-y: auto;"
-              >
-               
-              </v-data-table>
+              <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
+                <v-toolbar color="#FFF" density="compact">
+                  <v-toolbar-title>Zones</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-btn><PlusIcon size="20" /></v-btn>
+                </v-toolbar>
+                <v-list lines="two" height="300px" style="overflow: scroll;">
+                    <v-list-item
+                      v-for="item in zones"
+                      :key="item.id"
+                      :subtitle="item.code"
+                      :title="item.name"
+                    >
+                    <template v-slot:append>
+                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
+                    </template>
+                  </v-list-item>
+  
+                  <v-divider inset></v-divider>
+                </v-list>
+              </v-card>
             </v-col>
 
-            <v-col cols="12" md="3">
-              <h5 class="mb-2">Unit Of Measurement</h5>
-              <v-data-table
-                :headers="unitHeaders"
-                :items="measurementUnits"
-                :items-per-page="10"
-                class="elevation-1"
-                style="max-height: 300px; overflow-y: auto;"
-              >
-               
-              </v-data-table>
-            </v-col>
+           
 
-            <v-col cols="12" md="3">
-              <h5 class="mb-2">Product Categories</h5>
-              <v-data-table
-                :headers="productCategoryHeaders"
-                :items="productCategories"
-                :items-per-page="10"
-                class="elevation-1"
-                style="max-height: 300px; overflow-y: auto;"
-              >
-               
-              </v-data-table>
-            </v-col>
+           
 
-            <v-col cols="12" md="3">
-              <h5 class="mb-2">Zones</h5>
-              <v-data-table
-                :headers="zoneHeaders"
-                :items="zones"
-                :items-per-page="10"
-                class="elevation-1"
-                style="max-height: 300px; overflow-y: auto;"
-              >
-               
-              </v-data-table>
-            </v-col>
+            
           </v-row>
         </v-card-text>
 
@@ -193,6 +278,7 @@
 import { ref, onMounted } from 'vue';
 import { getData, uploadImage } from '@/utils/api';
 import { webUrl } from '@/utils/config';
+import { PlusIcon, PencilIcon } from 'vue-tabler-icons';
 
 const portHeaders = [
   { title: 'Name', key: 'name' },
@@ -261,8 +347,10 @@ const getConstantsData = async () => {
 };
 
 const getSettings = async () => {
+  loading.value = true;
   try {
     allSetting.value = await getData<any>('/get-all-setting');
+      loading.value = false;
     if (allSetting.value.length > 0) {
       backgroundImage.value = `${webUrl}${getValueByKey('front_background')}`;
       expiration_days.value = getValueByKey('expiration_days');
@@ -311,17 +399,3 @@ onMounted(() => {
   getConstantsData();
 });
 </script>
-
-<style >
-.table-container {
-  position: relative;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.v-data-table tbody {
-  /* display: block; */
-  height: 300px; /* Adjust based on header height */
-  /* overflow-y: auto; */
-}
-</style>

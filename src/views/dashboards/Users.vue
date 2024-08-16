@@ -87,39 +87,39 @@ function handleAddEmployee() {
   addDialog.value = true;
 }
 
-function saveEdit() {
-  if (selectedEmployee.value) {
-    // Update existing employee
-    selectedEmployee.value.name = editName.value;
-    selectedEmployee.value.email = editEmail.value;
-    selectedEmployee.value.phone = editPhone.value;
-    selectedEmployee.value.dob = editDob.value;
-    selectedEmployee.value.address = editAddress.value;
+// function saveEdit() {
+//   if (selectedEmployee.value) {
+//     // Update existing employee
+//     selectedEmployee.value.name = editName.value;
+//     selectedEmployee.value.email = editEmail.value;
+//     selectedEmployee.value.phone = editPhone.value;
+//     selectedEmployee.value.dob = editDob.value;
+//     selectedEmployee.value.address = editAddress.value;
 
-    if (editPassword.value && editPassword.value === confirmPassword.value) {
-      console.log('Password updated');
-    } else if (editPassword.value !== confirmPassword.value) {
-      console.error('Passwords do not match');
-      return;
-    }
+//     if (editPassword.value && editPassword.value === confirmPassword.value) {
+//       console.log('Password updated');
+//     } else if (editPassword.value !== confirmPassword.value) {
+//       console.error('Passwords do not match');
+//       return;
+//     }
 
-    editDialog.value = false;
-  } else {
-    // Add new employee
-    const newEmployee = {
-      id: items.value.length + 1, // Simple ID generation for example
-      name: editName.value,
-      email: editEmail.value,
-      phone: editPhone.value,
-      dob: editDob.value,
-      address: editAddress.value,
-    };
+//     editDialog.value = false;
+//   } else {
+//     // Add new employee
+//     const newEmployee = {
+//       id: items.value.length + 1, // Simple ID generation for example
+//       name: editName.value,
+//       email: editEmail.value,
+//       phone: editPhone.value,
+//       dob: editDob.value,
+//       address: editAddress.value,
+//     };
 
-    items.value.push(newEmployee);
-    totalItems.value = items.value.length;
-    addDialog.value = false;
-  }
-}
+//     items.value.push(newEmployee);
+//     totalItems.value = items.value.length;
+//     addDialog.value = false;
+//   }
+// }
 </script>
 
 <template>
@@ -143,7 +143,6 @@ function saveEdit() {
           <v-text-field
             v-model="search"
             label="Search"
-            prepend-inner-icon="mdi-magnify"
             class="mb-4"
           ></v-text-field>
 
@@ -166,7 +165,7 @@ function saveEdit() {
       </v-card>
 
       <!-- Dialog for Viewing Employee Details -->
-      <v-dialog v-model="viewDialog" max-width="600px">
+      <!-- <v-dialog v-model="viewDialog" max-width="600px">
         <v-card>
           <v-card-title>
             <span>Employee Details</span>
@@ -221,7 +220,7 @@ function saveEdit() {
             <v-btn color="secondary" @click="viewDialog = false">Close</v-btn>
           </v-card-actions>
         </v-card>
-      </v-dialog>
+      </v-dialog> -->
 
       <!-- Dialog for Editing Employee Details -->
       <v-dialog v-model="editDialog" max-width="600px">
@@ -287,7 +286,7 @@ function saveEdit() {
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="secondary" @click="saveEdit">Save</v-btn>
+            <!-- <v-btn color="secondary" @click="saveEdit">Save</v-btn> -->
             <v-btn @click="editDialog = false">Cancel</v-btn>
           </v-card-actions>
         </v-card>
@@ -357,7 +356,7 @@ function saveEdit() {
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="secondary" @click="saveEdit">Save</v-btn>
+            <!-- <v-btn color="secondary" @click="saveEdit">Save</v-btn> -->
             <v-btn @click="addDialog = false">Cancel</v-btn>
           </v-card-actions>
         </v-card>

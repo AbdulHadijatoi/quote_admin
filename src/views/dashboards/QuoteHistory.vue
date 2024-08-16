@@ -1,69 +1,61 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-// import { useToast } from 'vue-toastification';
+import { ref, watch, onMounted } from 'vue';
+import { CalendarIcon } from 'vue-tabler-icons'; // Importing icons from vue-tabler-icons
+// Import your postData function
+import { postData } from '@/utils/api';
 
-// Placeholder data
-const quotes = ref([
-  {
-    id: 1,
-    user_id: 1,
-    guest_name: 'John Doe',
-    guest_email: 'john.doe@example.com',
-    quote_reference: 'Q123',
-    valid_until: '2024-08-15 00:00:00',
-    total_cost: 150.00,
-    generated_by_employee: 0
-  },
-  // Add more placeholder quotes here
-]);
-
-const quoteDetails = ref([]);
+const quotes = ref([]);
 const isLoading = ref(false);
-const dialog = ref(false);
-const selectedQuote = ref(null);
-// const toast = useToast();
-
-// Filter data
 const dateRange = ref({ start: '', end: '' });
 const nameFilter = ref('');
 const emailFilter = ref('');
+var perPage = ref(10); // Default number of results per page
+var page = ref(1); // Default page number
+const totalItems = ref(0); // Total number of items from the API
 
-const filteredQuotes = computed(() => {
-  return quotes.value.filter(quote => {
-    const isDateInRange = !dateRange.value.start || !dateRange.value.end ||
-      (new Date(quote.valid_until) >= new Date(dateRange.value.start) &&
-       new Date(quote.valid_until) <= new Date(dateRange.value.end));
-    const matchesName = !nameFilter.value || quote.guest_name.toLowerCase().includes(nameFilter.value.toLowerCase());
-    const matchesEmail = !emailFilter.value || quote.guest_email.toLowerCase().includes(emailFilter.value.toLowerCase());
+// Function to fetch shipping quotes
+const fetchShippingQuotes = async () => {
+  isLoading.value = true;
 
-    return isDateInRange && matchesName && matchesEmail;
-  });
+  try {
+    const formData = new FormData();
+    formData.append('search', nameFilter.value || emailFilter.value || '');
+    formData.append('startDate', dateRange.value.start || '');
+    formData.append('endDate', dateRange.value.end || '');
+    formData.append('perPage', perPage.value.toString());
+    formData.append('page', page.value.toString());
+    
+    // Call the API to fetch the quotes
+    const response = await postData('/shipping-quotes', formData);
+    
+    // Update quotes data with the response
+    quotes.value = response.shipping_quotes;
+    totalItems.value = response.total; // Set the total items count
+  } catch (error) {
+    console.error('Failed to fetch shipping quotes:', error);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+// Call fetchShippingQuotes on component mount to load data initially
+onMounted(() => {
+  // fetchShippingQuotes();
 });
 
-const viewQuoteDetails = async (id) => {
-  // Fetch or filter details based on id
-  selectedQuote.value = quotes.value.find(quote => quote.id === id);
-  // Simulate fetching details
-  quoteDetails.value = [
-    {
-      volume: '500 m3',
-      total_weight: '1000 kg',
-      invoice_price: '2000 USD',
-      type_of_merchandise: 'Electronics',
-      first_import: 'No',
-      port_of_origin: 'Port A',
-      incoterm: 'FOB',
-      destination_location: 'Location B',
-      unit_of_measurement: 'TEU'
-    }
-  ];
-  dialog.value = true;
-};
+// Watchers to re-fetch data whenever filters or page changes
+watch([nameFilter, emailFilter, dateRange, page], () => {
+  fetchShippingQuotes();
+});
 
 const createQuote = () => {
   // Logic to create a new quote
   console.log('Create Quote button clicked.');
 };
+
+const dialog = ref(false);
+const quoteDetails = ref<any[]>([]);
+const selectedQuote = ref(null);
 
 const closeDialog = () => {
   dialog.value = false;
@@ -73,6 +65,16 @@ const deleteQuote = (id) => {
   quotes.value = quotes.value.filter(quote => quote.id !== id);
   console.log('Quote deleted successfully.');
 };
+
+// Function to view quote details
+const viewQuoteDetails = (quoteId) => {
+  const quote = quotes.value.find((q) => q.id === quoteId);
+  if (quote) {
+    quoteDetails.value = [quote];
+    dialog.value = true;
+  }
+};
+
 </script>
 
 <template>
@@ -82,6 +84,7 @@ const deleteQuote = (id) => {
         <v-card-item>
           <div class="d-sm-flex align-center justify-space-between">
             <v-btn color="secondary" @click="createQuote">Create Quote</v-btn>
+            <v-btn color="primary" @click="fetchShippingQuotes">Search</v-btn>
           </div>
         </v-card-item>
         <v-divider></v-divider>
@@ -104,7 +107,7 @@ const deleteQuote = (id) => {
               </v-col>
               <v-col cols="12" md="4">
                 <v-menu
-                  v-model:menu="dateMenu"
+                  
                   :close-on-content-click="false"
                   transition="scale-transition"
                   offset-y
@@ -113,7 +116,7 @@ const deleteQuote = (id) => {
                     <v-text-field
                       v-model="dateRange.start"
                       label="Start Date"
-                      prepend-icon="mdi-calendar"
+
                       readonly
                       v-bind="attrs"
                       v-on="on"
@@ -126,7 +129,7 @@ const deleteQuote = (id) => {
                   ></v-date-picker>
                 </v-menu>
                 <v-menu
-                  v-model:menu="dateMenu"
+                  
                   :close-on-content-click="false"
                   transition="scale-transition"
                   offset-y
@@ -136,7 +139,7 @@ const deleteQuote = (id) => {
                       ref="endDatePicker"
                       v-model="dateRange.end"
                       label="End Date"
-                      prepend-icon="mdi-calendar"
+
                       readonly
                       v-bind="attrs"
                       v-on="on"
@@ -145,14 +148,14 @@ const deleteQuote = (id) => {
                   </template>
                   <v-date-picker
                     v-model="dateRange.end"
-                    @input="dateMenu = false"
+
                   ></v-date-picker>
                 </v-menu>
               </v-col>
             </v-row>
           </v-form>
 
-          <v-data-table
+          <v-data-table-server
             :headers="[
               { title: 'Quote Reference', key: 'quote_reference' },
               { title: 'Name', key: 'guest_name' },
@@ -161,15 +164,21 @@ const deleteQuote = (id) => {
               { title: 'Valid Until', key: 'valid_until' },
               { title: 'Actions', key: 'actions' }
             ]"
-            :items="filteredQuotes"
+            :items="quotes"
             :loading="isLoading"
             item-key="id"
+
+            :page.sync="page"
+            :items-length="totalItems"
+
+            v-model:items-per-page="perPage"
+            @update:options="fetchShippingQuotes()"
           >
             <template v-slot:item.actions="{ item }">
               <v-btn @click="viewQuoteDetails(item.id)" color="secondary">View Details</v-btn>
-              <v-btn @click="deleteQuote(item.id)" color="red">Delete</v-btn>
+              <!-- <v-btn @click="deleteQuote(item.id)" color="red">Delete</v-btn> -->
             </template>
-          </v-data-table>
+          </v-data-table-server>
         </v-card-text>
       </v-card>
     </v-col>
