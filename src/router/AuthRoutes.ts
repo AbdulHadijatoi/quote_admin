@@ -1,8 +1,17 @@
+import { isAuthenticated } from '@/utils/api'; // Adjust the path according to your project structure
+
 const AuthRoutes = {
   path: '/auth',
   component: () => import('@/layouts/blank/BlankLayout.vue'),
   meta: {
     requiresAuth: false
+  },
+  beforeEnter: (to: any, from: any, next: any) => {
+    if (isAuthenticated()) {
+      next('/dashboard'); // Redirect to the dashboard if authenticated
+    } else {
+      next(); // Proceed to the auth route if not authenticated
+    }
   },
   children: [
     {
@@ -10,11 +19,6 @@ const AuthRoutes = {
       path: '/auth/login',
       component: () => import('@/views/authentication/auth/LoginPage.vue')
     },
-    // {
-    //   name: 'Register',
-    //   path: '/auth/register',
-    //   component: () => import('@/views/authentication/auth/RegisterPage.vue')
-    // },
     {
       name: 'Error 404',
       path: '/pages/error',
