@@ -44,7 +44,13 @@ const fetchData = async () => {
 };
 
 const rowDetails = ref<RowModel>();
-const selectedRow = ref<RowModel | undefined>();
+const selectedRow = ref<RowModel>({
+  id: 0,
+  name: '',
+  email: '',
+  address: '',
+  phone: '',
+});
 const viewDialog = ref(false);
 const editDialog = ref(false);
 const deleteDialog = ref(false);
@@ -64,7 +70,7 @@ const handleUpdate = async () => {
       formData.append('address', selectedRow.value.address);
       formData.append('phone', selectedRow.value.phone);
 
-      const response = await postData('/subscriber/update', formData);
+      const response = await postData('/subscribers/update', formData);
 
       if (response.success) {
         console.log('Update successful:', response.message);
@@ -85,8 +91,25 @@ const handleDelete = (row: RowModel) => {
   deleteDialog.value = true;
 };
 
-const confirmDelete = (row: RowModel) => {
-  //
+const confirmDelete = async () => {
+  if (selectedRow.value) {
+    try {
+      const formData = new FormData();
+      formData.append('id', selectedRow.value.id.toString());
+
+      const response = await postData('/subscribers/delete', formData);
+
+      if (response.status) {
+        console.log('Delete successful:', response.message);
+        deleteDialog.value = false;
+        fetchData(); // Refresh the data
+      } else {
+        console.error('Delete failed:', response.message);
+      }
+    } catch (error) {
+      console.error('Error during update:', error);
+    }
+  }
 };
 
 const handleView = (row: RowModel) => {
@@ -209,32 +232,16 @@ const handleView = (row: RowModel) => {
       <v-card-text>
         <v-row>
           <v-col cols="12">
-            <v-text-field
-
-              label="Name"
-              
-            ></v-text-field>
+            <v-text-field v-model="selectedRow.name" label="Name"/>
           </v-col>
           <v-col cols="12">
-            <v-text-field
-
-              label="Email"
-              
-            ></v-text-field>
+            <v-text-field v-model="selectedRow.email" label="Email"/>
           </v-col>
           <v-col cols="12">
-            <v-text-field
-
-              label="Address"
-              
-            ></v-text-field>
+            <v-text-field v-model="selectedRow.address" label="Address"/>
           </v-col>
           <v-col cols="12">
-            <v-text-field
-
-              label="Phone"
-              
-            ></v-text-field>
+            <v-text-field v-model="selectedRow.phone" label="Phone"/>
           </v-col>
         </v-row>
       </v-card-text>
