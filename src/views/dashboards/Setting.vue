@@ -91,10 +91,10 @@
           <v-row>
             <v-col cols="12" md="4">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2)" :loading="loading" color="secondary">
-                <v-toolbar color="" density="compact">
+                <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Ports of Origin</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn><PlusIcon size="20" /></v-btn>
+                  <v-btn icon><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -103,10 +103,10 @@
                       :subtitle="item.code"
                       :title="item.name"
                     >
-                    <template v-slot:append>
-                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
-                    </template>
-                  </v-list-item>
+                      <template v-slot:append>
+                        <v-btn icon elevation="0" @click="handleEditOriginPort(item)"><PencilIcon size="20" /></v-btn>
+                      </template>
+                    </v-list-item>
   
                   <v-divider inset></v-divider>
                 </v-list>
@@ -115,10 +115,10 @@
             
             <v-col cols="12" md="4">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
-                <v-toolbar color="" density="compact">
+                <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Destination Location</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn><PlusIcon size="20" /></v-btn>
+                  <v-btn icon><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -128,7 +128,7 @@
                       :title="item.name"
                     >
                     <template v-slot:append>
-                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
+                      <v-btn icon elevation="0"><PencilIcon size="20" /></v-btn>
                     </template>
                   </v-list-item>
   
@@ -139,10 +139,10 @@
             
             <v-col cols="12" md="4">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
-                <v-toolbar color="" density="compact">
+                <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Type Of Merchandise</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn><PlusIcon size="20" /></v-btn>
+                  <v-btn icon><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -152,7 +152,7 @@
                       :title="item.name"
                     >
                     <template v-slot:append>
-                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
+                      <v-btn icon elevation="0"><PencilIcon size="20" /></v-btn>
                     </template>
                   </v-list-item>
   
@@ -163,10 +163,10 @@
             
             <v-col cols="12" md="3">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.35)" :loading="loading">
-                <v-toolbar color="" density="compact">
+                <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Incoterm</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn><PlusIcon size="20" /></v-btn>
+                  <v-btn icon><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -176,7 +176,7 @@
                       :title="item.name"
                     >
                     <template v-slot:append>
-                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
+                      <v-btn icon elevation="0"><PencilIcon size="20" /></v-btn>
                     </template>
                   </v-list-item>
   
@@ -188,10 +188,10 @@
            
             <v-col cols="12" md="3">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
-                <v-toolbar color="" density="compact">
+                <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Unit of Measurement</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn><PlusIcon size="20" /></v-btn>
+                  <v-btn icon><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -201,7 +201,7 @@
                       :title="item.name"
                     >
                     <template v-slot:append>
-                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
+                      <v-btn icon elevation="0"><PencilIcon size="20" /></v-btn>
                     </template>
                   </v-list-item>
   
@@ -213,10 +213,10 @@
            
             <v-col cols="12" md="3">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
-                <v-toolbar color="" density="compact">
+                <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Product Categories</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn><PlusIcon size="20" /></v-btn>
+                  <v-btn icon><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -226,7 +226,7 @@
                       :title="item.name"
                     >
                     <template v-slot:append>
-                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
+                      <v-btn icon elevation="0"><PencilIcon size="20" /></v-btn>
                     </template>
                   </v-list-item>
   
@@ -238,10 +238,10 @@
            
             <v-col cols="12" md="3">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2);" :loading="loading" color="secondary">
-                <v-toolbar color="" density="compact">
+                <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Zones</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn><PlusIcon size="20" /></v-btn>
+                  <v-btn icon><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -251,7 +251,7 @@
                       :title="item.name"
                     >
                     <template v-slot:append>
-                      <v-btn elevation="0"><PencilIcon size="20" /></v-btn>
+                      <v-btn icon elevation="0"><PencilIcon size="20" /></v-btn>
                     </template>
                   </v-list-item>
   
@@ -259,24 +259,41 @@
                 </v-list>
               </v-card>
             </v-col>
-
-           
-
-           
-
-            
           </v-row>
         </v-card-text>
-
-        
       </v-card>
     </v-col>
   </v-row>
+
+  <!-- Edit Dialog -->
+  <v-dialog v-model="editOriginPortDialog" max-width="600px">
+    <v-card>
+      <v-card-title>
+        <span>Edit Details</span>
+      </v-card-title>
+      <v-divider></v-divider>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12">
+            <v-text-field v-model="selectedOriginPort.name" label="Name"/>
+          </v-col>
+          <v-col cols="12">
+            <v-text-field v-model="selectedOriginPort.code" label="Code"/>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="secondary" @click="handleUpdateOriginPort">Save</v-btn>
+        <v-btn @click="editOriginPortDialog = false">Cancel</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { getData, uploadImage } from '@/utils/api';
+import { getData, uploadImage, postData } from '@/utils/api';
 import { webUrl } from '@/utils/config';
 import { PlusIcon, PencilIcon } from 'vue-tabler-icons';
 
@@ -304,6 +321,42 @@ interface SettingItem {
   key: string;
   value: string;
 }
+
+const editOriginPortDialog = ref(false);
+const selectedOriginPort = ref<Constant1>({
+  id: 0,
+  code: '',
+  name: '',
+});
+
+const handleEditOriginPort = async (row: Constant1) => {
+  editOriginPortDialog.value = true;
+  selectedOriginPort.value = row;
+}
+
+const handleUpdateOriginPort = async () => {
+  loading.value = true;
+  if (selectedOriginPort.value) {
+    try {
+      const formData = new FormData();
+      formData.append('id', selectedOriginPort.value.id.toString());
+      formData.append('name', selectedOriginPort.value.name);
+      formData.append('code', selectedOriginPort.value.code);
+
+      const response = await postData('/constants/update-origin-port', formData);
+
+      console.log('Update successful:', response.message);
+      editOriginPortDialog.value = false;
+      loading.value = false;
+      getConstantsData();
+      
+    } catch (error) {
+      console.error('Error during update:', error);
+    }
+  }
+}
+
+
 
 const incoterms = ref<Constant1[]>([]);
 const measurementUnits = ref<Constant1[]>([]);

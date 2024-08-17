@@ -222,7 +222,6 @@ const handleView = (row: RowModel) => {
   </v-dialog>
 
   <!-- Edit Details Dialog -->
-  <!-- Edit Details Dialog -->
   <v-dialog v-model="editDialog" max-width="600px">
     <v-card>
       <v-card-title>
