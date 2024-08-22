@@ -220,7 +220,7 @@
         <v-btn color="secondary" block variant="flat" size="large" @click="step++">Next</v-btn>
       </v-col>
       <v-col cols="6" v-if="step === 2">
-        <v-btn color="secondary" block variant="flat" size="large" @click="downloadPdf()">Calcular</v-btn>
+        <v-btn color="secondary" block variant="flat" size="large" :loading="loading" @click="downloadPdf()">Calcular</v-btn>
       </v-col>
     </v-row>
   </v-form>
@@ -233,6 +233,7 @@ import { getData, postData, getPdf, postPdf } from '@/utils/api';
 
 // 
 const downloadPdf = async () => {
+  loading.value = true;
   const formData = new FormData();
   
   formData.append('form_tab', '2');
@@ -276,7 +277,27 @@ const downloadPdf = async () => {
   }
   await postData('/shipping-quotes/create', formData);
   // const response = await postData<any>('/shipping-quotes/create', formData);
+
+  resetFormData();
+  loading.value = false;
 };
+
+const resetFormData = () => {
+  guest_name.value = '';
+  guest_email.value = '';
+  guest_phone.value = '';
+  guest_address.value = '';
+  dni_ruc_option.value = '';
+  dni_ruc_value.value = '';
+  invoice_price.value = '';
+  type_of_merchandise.value = null;
+  first_import.value = null;
+  origin_port.value = null;
+  incoterm.value = null;
+  destination_location.value = null;
+  measurement_unit.value = null;
+};
+
 
 const getConstantsData = async () => {
   try {
@@ -316,6 +337,8 @@ interface SettingItem {
   key: string;
   value: string;
 }
+
+const loading = ref(false);
 
 const step = ref(1);
 const guest_email = ref<string>('');

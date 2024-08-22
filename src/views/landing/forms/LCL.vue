@@ -212,7 +212,7 @@
         <v-btn color="secondary" block variant="flat" size="large" @click="step++">Next</v-btn>
       </v-col>
       <v-col cols="6" v-if="step === 2">
-        <v-btn color="secondary" block variant="flat" size="large" @click="downloadPdf()">Calcular</v-btn>
+        <v-btn color="secondary" block variant="flat" size="large" :loading="loading" @click="downloadPdf()">Calcular</v-btn>
       </v-col>
     </v-row>
 
@@ -224,6 +224,8 @@ import { ref, onMounted } from 'vue';
 import { getData, postData, getPdf, postPdf } from '@/utils/api';
 
 const downloadPdf = async () => {
+  loading.value = true;
+
   const formData = new FormData();
 
   formData.append('form_tab', '1');
@@ -236,17 +238,6 @@ const downloadPdf = async () => {
   formData.append('volume', volume.value);
   formData.append('total_weight', total_weight.value);
   formData.append('invoice_price', invoice_price.value);
-  // formData.append('first_import', first_import.value.id);
-  // formData.append('type_of_merchandise', type_of_merchandise.value.product_category_id);
-  // formData.append('type_of_merchandise_id', type_of_merchandise.value.id);
-  // formData.append('type_of_merchandise_name', type_of_merchandise.value.name);
-  // formData.append('origin_port', origin_port.value.id);
-  // formData.append('origin_port_name', origin_port.value.name);
-  // formData.append('incoterm', incoterm.value.id);
-  // formData.append('incoterm_name', incoterm.value.name);
-  // formData.append('destination_location', destination_location.value.zone_id);
-  // formData.append('destination_location_id', destination_location.value.id);
-  // formData.append('destination_location_name', destination_location.value.name);
 
   if (first_import.value) {
     formData.append('first_import', first_import.value.toString());
@@ -277,8 +268,30 @@ const downloadPdf = async () => {
   await postData('/shipping-quotes/create', formData);
   // const response = await postData<any>('/shipping-quotes/create', formData);
   // console.log(response);
+  resetFormData();
+
+  loading.value = false;
 };
 
+const resetFormData = () => {
+  guest_name.value = '';
+  guest_email.value = '';
+  guest_phone.value = '';
+  guest_address.value = '';
+  dni_ruc_option.value = '';
+  dni_or_ruc_value.value = '';
+  volume.value = '';
+  total_weight.value = '';
+  invoice_price.value = '';
+  first_import.value = null;
+  type_of_merchandise.value = null;
+  origin_port.value = null;
+  incoterm.value = null;
+  destination_location.value = null;
+};
+
+
+const loading = ref(false);
 
 const getConstantsData = async () => {
   try {
