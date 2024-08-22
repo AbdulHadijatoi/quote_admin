@@ -274,7 +274,7 @@ const downloadPdf = async () => {
     formData.append('measurement_unit_code', measurement_unit.value.code);
     formData.append('measurement_unit_name', measurement_unit.value.name);
   }
-  await postPdf('/shipping-quotes/create', formData);
+  await postData('/shipping-quotes/create', formData);
   // const response = await postData<any>('/shipping-quotes/create', formData);
 };
 

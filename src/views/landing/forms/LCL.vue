@@ -274,7 +274,7 @@ const downloadPdf = async () => {
     formData.append('destination_location_name', destination_location.value.name);
   }
 
-  await postPdf('/shipping-quotes/create', formData);
+  await postData('/shipping-quotes/create', formData);
   // const response = await postData<any>('/shipping-quotes/create', formData);
   // console.log(response);
 };
