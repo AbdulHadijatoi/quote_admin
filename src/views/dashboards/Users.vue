@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { postData } from '@/utils/api';
+import { postData, showError, showSuccess } from '@/utils/api';
 import { SearchIcon, PlusIcon, EditIcon, TrashIcon } from 'vue-tabler-icons';
 
 interface RowModel {
@@ -96,9 +96,11 @@ const handleUpdate = async () => {
       if (response.status) {
         console.log('Update successful:', response.message);
         editDialog.value = false;
+        showSuccess(response.message);
         fetchData(); // Refresh the data
       } else {
         console.error('Update failed:', response.message);
+        showError(response.message);
       }
     } catch (error) {
       console.error('Error during update:', error);
@@ -132,9 +134,11 @@ const handleCreate = async () => {
         password: '' // Add password if used for creation
       };
       createDialog.value = false;
+      showSuccess(response.message);
       fetchData(); // Refresh the data
     } else {
       console.error('Create failed:', response.message);
+      showError(response.message);
     }
   } catch (error) {
     console.error('Error during create:', error);
@@ -157,9 +161,11 @@ const confirmDelete = async () => {
       if (response.status) {
         console.log('Delete successful:', response.message);
         deleteDialog.value = false;
+        showSuccess(response.message);
         fetchData(); // Refresh the data
       } else {
         console.error('Delete failed:', response.message);
+        showError(response.message);
       }
     } catch (error) {
       console.error('Error during delete:', error);

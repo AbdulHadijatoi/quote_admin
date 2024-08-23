@@ -1,11 +1,48 @@
 import { useAuthStore } from '../stores/auth'; // Adjust the path according to your project structure
 import { baseUrl } from './config';
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
  const isAuthenticated = () => {
   const authStore = useAuthStore();
   return !!authStore.user; // Returns true if user is authenticated, false otherwise
 };
 
+const showSuccess = (message: string) => {
+  toast(message, {
+    "theme": "light",
+    "type": "success",
+    // "autoClose": false,
+    "dangerouslyHTMLString": true
+  })
+}
+
+const showError = (message: string) => {
+  toast(message, {
+    "theme": "light",
+    "type": "error",
+    // "autoClose": false,
+    "dangerouslyHTMLString": true
+  })
+}
+
+const showWarning = (message: string) => {
+  toast(message, {
+    "theme": "light",
+    "type": "warning",
+    // "autoClose": false,
+    "dangerouslyHTMLString": true
+  })
+}
+
+const showInfo = (message: string) => {
+  toast(message, {
+    "theme": "light",
+    "type": "info",
+    // "autoClose": false,
+    "dangerouslyHTMLString": true
+  })
+}
 
 async function handleUnauthorized(response: Response) {
   if (response.status === 401) {
@@ -149,4 +186,4 @@ async function uploadImage<T>(endpoint: string, formData: FormData): Promise<T> 
 }
 
 // Common export for all functions
-export { getData, postData, getPdf, postPdf, uploadImage,isAuthenticated };
+export { getData, postData, getPdf, postPdf, uploadImage, isAuthenticated, showSuccess, showError, showWarning, showInfo };

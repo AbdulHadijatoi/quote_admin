@@ -229,7 +229,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { getData, postData, getPdf, postPdf } from '@/utils/api';
+import { getData, postData, getPdf, postPdf, showSuccess } from '@/utils/api';
 
 // 
 const downloadPdf = async () => {
@@ -277,7 +277,7 @@ const downloadPdf = async () => {
   }
   await postData('/shipping-quotes/create', formData);
   // const response = await postData<any>('/shipping-quotes/create', formData);
-
+  showSuccess("Shipping Quote has been sent to your email address");
   resetFormData();
   loading.value = false;
 };

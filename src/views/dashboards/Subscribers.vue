@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { postData } from '@/utils/api';
+import { postData, showSuccess, showError, showWarning, showInfo } from '@/utils/api';
 import { SearchIcon } from 'vue-tabler-icons';
 
 interface RowModel {
@@ -74,10 +74,12 @@ const handleUpdate = async () => {
 
       if (response.success) {
         console.log('Update successful:', response.message);
+        showSuccess(response.message);
         editDialog.value = false;
         fetchData(); // Refresh the data
       } else {
         console.error('Update failed:', response.message);
+        showError(response.message);
       }
     } catch (error) {
       console.error('Error during update:', error);
@@ -102,9 +104,11 @@ const confirmDelete = async () => {
       if (response.status) {
         console.log('Delete successful:', response.message);
         deleteDialog.value = false;
+        showSuccess(response.message);
         fetchData(); // Refresh the data
       } else {
         console.error('Delete failed:', response.message);
+        showError(response.message);
       }
     } catch (error) {
       console.error('Error during update:', error);
@@ -128,6 +132,7 @@ const handleView = (row: RowModel) => {
         <v-card-item>
           <div class="d-sm-flex align-center justify-space-between">
             <v-card-title>Subscribers List</v-card-title>
+            <!-- <v-btn color="secondary" @click="showSuccess('TEST MESSAGE')"><PlusIcon size="20" class="mr-2"/>Testing</v-btn> -->
           </div>
         </v-card-item>
         <v-divider></v-divider>

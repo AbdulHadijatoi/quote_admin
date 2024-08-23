@@ -221,7 +221,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { getData, postData, getPdf, postPdf } from '@/utils/api';
+import { getData, postData, getPdf, postPdf, showSuccess } from '@/utils/api';
 
 const downloadPdf = async () => {
   loading.value = true;
@@ -264,8 +264,8 @@ const downloadPdf = async () => {
     formData.append('destination_location_id', destination_location.value.id.toString());
     formData.append('destination_location_name', destination_location.value.name);
   }
-
   await postData('/shipping-quotes/create', formData);
+  showSuccess("Shipping Quote has been sent to your email address");
   // const response = await postData<any>('/shipping-quotes/create', formData);
   // console.log(response);
   resetFormData();
