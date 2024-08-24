@@ -79,6 +79,14 @@
                 <span>No image selected</span>
               </v-card>
             </v-col>
+
+            <!-- <v-col cols="12">
+              <h5 class="mb-3">TextEditor</h5>
+              <QuillEditor
+                theme="snow"
+                toolbar="full"
+              />
+            </v-col> -->
           </v-row>
         </v-card-text>
 
@@ -296,6 +304,8 @@ import { ref, onMounted } from 'vue';
 import { getData, uploadImage, postData } from '@/utils/api';
 import { webUrl } from '@/utils/config';
 import { PlusIcon, PencilIcon } from 'vue-tabler-icons';
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 interface Constant1 {
   id: number;

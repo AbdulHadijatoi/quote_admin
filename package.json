@@ -20,6 +20,7 @@
     "@tsconfig/node20": "20.1.4",
     "@typescript-eslint/parser": "^7.8.0",
     "@vue/composition-api": "^1.7.2",
+    "@vueup/vue-quill": "^1.2.0",
     "apexcharts": "3.49.1",
     "axios": "1.6.8",
     "axios-mock-adapter": "^1.22.0",
