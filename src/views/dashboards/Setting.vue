@@ -219,7 +219,7 @@
                 <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Product Categories</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn icon @click="handleEdit(createItem,'Product Category','Create')"><PlusIcon size="20" /></v-btn>
+                  <!-- <v-btn icon @click="handleEdit(createItem,'Product Category','Create')"><PlusIcon size="20" /></v-btn> -->
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -244,7 +244,7 @@
                 <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Zones</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn icon @click="handleEdit(createItem,'Zone','Create')"><PlusIcon size="20" /></v-btn>
+                  <!-- <v-btn icon @click="handleEdit(createItem,'Zone','Create')"><PlusIcon size="20" /></v-btn> -->
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
