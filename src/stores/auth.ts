@@ -26,7 +26,10 @@ export const useAuthStore = defineStore({
     logout() {
       this.user = null;
       localStorage.removeItem('user');
-      router.push('/auth/login');
+
+      window.location.href = '/auth/login'; //to avoid role issue
+      // router.push('/auth/login');
+
     }
   }
 });

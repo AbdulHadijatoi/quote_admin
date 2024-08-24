@@ -8,7 +8,6 @@ const MainRoutes = {
   redirect: '/main/dashboard',
   component: () => import('@/layouts/full/FullLayout.vue'),
   beforeEnter: (to: any, from: any, next: any) => {
-    console.log('is super admin: ',isSuperAdmin());
     if (isSuperAdmin()) {
       next(); // Allow access to all routes
     } else {
