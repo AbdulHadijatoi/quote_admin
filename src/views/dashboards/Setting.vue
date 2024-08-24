@@ -63,9 +63,6 @@
                     <v-chip v-if="index < 2" class="me-2" color="secondary" size="small" label>
                       {{ fileName }}
                     </v-chip>
-                    <!-- <span v-else-if="index === 2" class="text-overline text-grey-darken-3 mx-2">
-                      +{{ front_background.length - 2 }} File(s)
-                    </span> -->
                   </template>
                 </template>
               </v-file-input>
@@ -94,15 +91,13 @@
         
         <v-divider></v-divider>
         <v-card-text>
-          <!-- <h2 class="mb-4">Constants Data</h2> -->
-          <!-- <v-divider class="mb-4"></v-divider> -->
           <v-row>
             <v-col cols="12" md="4">
               <v-card variant="outlined" rounded="0" style="border: 1px solid rgba(0,0,0,0.2)" :loading="loading" color="secondary">
                 <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Ports of Origin</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn icon><PlusIcon size="20" /></v-btn>
+                  <v-btn icon @click="handleEdit(createItem,'Port of Origin','Create')"><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -112,7 +107,7 @@
                       :title="item.name"
                     >
                       <template v-slot:append>
-                        <v-btn icon elevation="0" @click="handleEditOriginPort(item)"><PencilIcon size="20" /></v-btn>
+                        <v-btn icon elevation="0" @click="handleEdit(item,'Port of Origin','Edit')"><PencilIcon size="20" /></v-btn>
                       </template>
                     </v-list-item>
   
@@ -126,7 +121,7 @@
                 <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Destination Location</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn icon><PlusIcon size="20" /></v-btn>
+                  <v-btn icon @click="handleEditDestination(createItem,'Destination Location','Create')"><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -136,7 +131,7 @@
                       :title="item.name"
                     >
                     <template v-slot:append>
-                      <v-btn icon elevation="0"><PencilIcon size="20" /></v-btn>
+                      <v-btn icon elevation="0" @click="handleEditDestination(item,'Destination Location','Edit')"><PencilIcon size="20" /></v-btn>
                     </template>
                   </v-list-item>
   
@@ -150,7 +145,7 @@
                 <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Type Of Merchandise</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn icon><PlusIcon size="20" /></v-btn>
+                  <v-btn icon @click="handleEditMerchandise(createItem,'Type Of Merchandise','Create')"><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -160,7 +155,7 @@
                       :title="item.name"
                     >
                     <template v-slot:append>
-                      <v-btn icon elevation="0"><PencilIcon size="20" /></v-btn>
+                      <v-btn icon elevation="0" @click="handleEditMerchandise(item,'Type Of Merchandise','Edit')"><PencilIcon size="20" /></v-btn>
                     </template>
                   </v-list-item>
   
@@ -174,7 +169,7 @@
                 <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Incoterm</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn icon><PlusIcon size="20" /></v-btn>
+                  <v-btn icon @click="handleEdit(createItem,'Incoterm','Create')"><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -184,7 +179,7 @@
                       :title="item.name"
                     >
                     <template v-slot:append>
-                      <v-btn icon elevation="0"><PencilIcon size="20" /></v-btn>
+                      <v-btn icon elevation="0" @click="handleEdit(item,'Incoterm','Edit')"><PencilIcon size="20" /></v-btn>
                     </template>
                   </v-list-item>
   
@@ -199,7 +194,7 @@
                 <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Unit of Measurement</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn icon><PlusIcon size="20" /></v-btn>
+                  <v-btn icon @click="handleEdit(createItem,'Unit of Measurement','Create')"><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -209,7 +204,7 @@
                       :title="item.name"
                     >
                     <template v-slot:append>
-                      <v-btn icon elevation="0"><PencilIcon size="20" /></v-btn>
+                      <v-btn icon elevation="0" @click="handleEdit(item,'Unit of Measurement','Edit')"><PencilIcon size="20" /></v-btn>
                     </template>
                   </v-list-item>
   
@@ -224,7 +219,7 @@
                 <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Product Categories</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn icon><PlusIcon size="20" /></v-btn>
+                  <v-btn icon @click="handleEdit(createItem,'Product Category','Create')"><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -234,7 +229,7 @@
                       :title="item.name"
                     >
                     <template v-slot:append>
-                      <v-btn icon elevation="0"><PencilIcon size="20" /></v-btn>
+                      <v-btn icon elevation="0" @click="handleEdit(item,'Product Category','Edit')"><PencilIcon size="20" /></v-btn>
                     </template>
                   </v-list-item>
   
@@ -249,7 +244,7 @@
                 <v-toolbar color="#f2f2f2" density="compact">
                   <v-toolbar-title>Zones</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn icon><PlusIcon size="20" /></v-btn>
+                  <v-btn icon @click="handleEdit(createItem,'Zone','Create')"><PlusIcon size="20" /></v-btn>
                 </v-toolbar>
                 <v-list lines="two" height="300px" style="overflow: scroll;">
                     <v-list-item
@@ -259,7 +254,7 @@
                       :title="item.name"
                     >
                     <template v-slot:append>
-                      <v-btn icon elevation="0"><PencilIcon size="20" /></v-btn>
+                      <v-btn icon elevation="0" @click="handleEdit(item,'Zone','Edit')"><PencilIcon size="20" /></v-btn>
                     </template>
                   </v-list-item>
   
@@ -273,27 +268,51 @@
     </v-col>
   </v-row>
 
-  <!-- Edit Dialog -->
-  <v-dialog v-model="editOriginPortDialog" max-width="600px">
+  <!-- Edit Dialog for Constant Data -->
+  <v-dialog v-model="editDialog" max-width="600px">
     <v-card>
       <v-card-title>
-        <span>Edit Details</span>
+        <span> {{ dialogAction + ' ' + dialogTitle }} Details</span>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text>
         <v-row>
           <v-col cols="12">
-            <v-text-field v-model="selectedOriginPort.name" label="Name"/>
+            <v-text-field v-model="selectedItem.name" label="Name" />
           </v-col>
-          <v-col cols="12">
-            <v-text-field v-model="selectedOriginPort.code" label="Code"/>
+          <v-col cols="12" v-if="dialogTitle != 'Type Of Merchandise' && dialogTitle != 'Destination Location' && dialogTitle != 'Product Category' && dialogTitle != 'Zone'">
+            <v-text-field v-model="selectedItem.code" label="Code" />
+          </v-col>
+
+          <!-- Add zone selection for Destination Location -->
+          <v-col v-if="dialogTitle === 'Destination Location'" cols="12">
+            <v-select
+              v-model="selectedItem.zone_id"
+              :items="zones"
+              item-title="name"
+              item-value="id"
+              label="Select Zone"
+
+            ></v-select>
+          </v-col>
+
+          <!-- Add product category selection for Merchandise Type -->
+          <v-col v-if="dialogTitle === 'Type Of Merchandise'" cols="12">
+            <v-select
+              v-model="selectedItem.product_category_id"
+              :items="productCategories"
+              item-title="name"
+              item-value="id"
+              label="Select Product Category"
+
+            ></v-select>
           </v-col>
         </v-row>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="secondary" @click="handleUpdateOriginPort">Save</v-btn>
-        <v-btn @click="editOriginPortDialog = false">Cancel</v-btn>
+        <v-btn color="secondary" @click="handleSave">Save</v-btn>
+        <v-btn @click="editDialog = false">Cancel</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -301,10 +320,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { getData, uploadImage, postData } from '@/utils/api';
+import { getData, uploadImage, postData, showSuccess, showError } from '@/utils/api';
 import { webUrl } from '@/utils/config';
 import { PlusIcon, PencilIcon } from 'vue-tabler-icons';
-import { QuillEditor } from '@vueup/vue-quill'
+import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 interface Constant1 {
@@ -339,34 +358,107 @@ const selectedOriginPort = ref<Constant1>({
   name: '',
 });
 
-const handleEditOriginPort = async (row: Constant1) => {
-  editOriginPortDialog.value = true;
-  selectedOriginPort.value = row;
-}
+const selectedItem = ref<any>({
+  id: 0,
+  code: '',
+  name: '',
+  zone_id: 0,
+  product_category_id: 0,
+});
 
-const handleUpdateOriginPort = async () => {
+const editDialog = ref(false);
+const dialogTitle = ref('');
+const dialogAction = ref('');
+
+const createItem = ref<any>({
+  id: 0,
+  code: '',
+  name: '',
+});
+
+const constantType = ref('');
+
+const handleEditDestination = (item: any, title: string, action: string) => {
+  selectedItem.value = {
+    ...item,
+    zone_id: item.zone_id || 0, // Ensure default value is set if undefined
+  };
+  dialogTitle.value = title;
+  dialogAction.value = action;
+  editDialog.value = true;
+  constantType.value = title;
+};
+
+const handleEditMerchandise = (item: any, title: string, action: string) => {
+  selectedItem.value = {
+    ...item,
+    product_category_id: item.product_category_id || 0, // Ensure default value is set if undefined
+  };
+  dialogTitle.value = title;
+  dialogAction.value = action;
+  editDialog.value = true;
+  constantType.value = title;
+};
+
+const handleEdit = async (row: Constant1, type: string, action: string) => {
+  editDialog.value = true;
+  selectedItem.value = row;
+  dialogAction.value = action;
+  constantType.value = type;
+  dialogTitle.value = type;
+};
+
+const handleSave = async () => {
   loading.value = true;
-  if (selectedOriginPort.value) {
-    try {
-      const formData = new FormData();
-      formData.append('id', selectedOriginPort.value.id.toString());
-      formData.append('name', selectedOriginPort.value.name);
-      formData.append('code', selectedOriginPort.value.code);
+  try {
+    // Create a new FormData instance
+    const formData = new FormData();
 
-      const response = await postData('/constants/update-origin-port', formData);
+    // Append your data to the FormData instance
+    Object.keys(selectedItem.value).forEach(key => {
+      formData.append(key, selectedItem.value[key]);
+    });
+    formData.append('zone_id', selectedItem.value.zone_id);
+    formData.append('product_category_id', selectedItem.value.product_category_id);
 
-      console.log('Update successful:', response.message);
-      editOriginPortDialog.value = false;
-      loading.value = false;
-      getConstantsData();
-      
-    } catch (error) {
-      console.error('Error during update:', error);
+    let url = '';
+    switch (constantType.value) {
+      case 'Port of Origin':
+        url = selectedItem.value.id ? '/constants/update-origin-port' : '/constants/create-origin-port';
+        break;
+      case 'Destination Location':
+        url = selectedItem.value.id ? '/constants/update-destination-location' : '/constants/create-destination-location';
+        break;
+      case 'Type Of Merchandise':
+        url = selectedItem.value.id ? '/constants/update-merchandise-type' : '/constants/create-merchandise-type';
+        break;
+      case 'Incoterm':
+        url = selectedItem.value.id ? '/constants/update-incoterm' : '/constants/create-incoterm';
+        break;
+      case 'Measurement Unit':
+        url = selectedItem.value.id ? '/constants/update-measurement-unit' : '/constants/create-measurement-unit';
+        break;
+      case 'Product Category':
+        url = selectedItem.value.id ? '/constants/update-product-category' : '/constants/create-product-category';
+        break;
+      case 'Zone':
+        url = selectedItem.value.id ? '/constants/update-zone' : '/constants/create-zone';
+        break;
+      default:
+        return;
     }
+
+    const response = await postData(url, formData);
+    showSuccess(response.message);
+    getConstantsData();
+    console.log('Save successful:', response.message);
+    editDialog.value = false;
+  } catch (error) {
+    console.error('Error saving data:', error);
+  } finally {
+    loading.value = false;
   }
-}
-
-
+};
 
 const incoterms = ref<Constant1[]>([]);
 const measurementUnits = ref<Constant1[]>([]);
