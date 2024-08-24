@@ -1,3 +1,5 @@
+import { isSuperAdmin } from '@/utils/api';
+
 const MainRoutes = {
   path: '/main',
   meta: {
@@ -5,6 +7,21 @@ const MainRoutes = {
   },
   redirect: '/main/dashboard',
   component: () => import('@/layouts/full/FullLayout.vue'),
+  beforeEnter: (to: any, from: any, next: any) => {
+    console.log('is super admin: ',isSuperAdmin());
+    if (isSuperAdmin()) {
+      next(); // Allow access to all routes
+    } else {
+      const allowedRoutes = ['Dashboard', 'Create Quote', 'Quote History'];
+      const routeName = to.name;
+
+      if (allowedRoutes.includes(routeName)) {
+        next(); // Allow access to specific routes
+      } else {
+        next('/main/dashboard'); // Redirect to the dashboard or another allowed route
+      }
+    }
+  },
   children: [
     {
       name: 'Dashboard',

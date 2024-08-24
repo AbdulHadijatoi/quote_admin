@@ -7,6 +7,11 @@ import "vue3-toastify/dist/index.css";
   const authStore = useAuthStore();
   return !!authStore.user; // Returns true if user is authenticated, false otherwise
 };
+ 
+const isSuperAdmin = () => {
+  const authStore = useAuthStore();
+  return !!authStore.user && authStore.user.role == "Super Admin"; // Returns true if user is authenticated, false otherwise
+};
 
 const showSuccess = (message: string) => {
   toast(message, {
@@ -186,4 +191,4 @@ async function uploadImage<T>(endpoint: string, formData: FormData): Promise<T> 
 }
 
 // Common export for all functions
-export { getData, postData, getPdf, postPdf, uploadImage, isAuthenticated, showSuccess, showError, showWarning, showInfo };
+export { getData, postData, getPdf, postPdf, uploadImage, isAuthenticated, isSuperAdmin, showSuccess, showError, showWarning, showInfo };
