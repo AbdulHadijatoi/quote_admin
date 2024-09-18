@@ -53,7 +53,7 @@ const tab = ref('');
           <v-card-text style="padding: 0px;">
             <v-tabs-window v-model="tab">
               <v-tabs-window-item value="lcl_tab">
-                <h2 class="text-h5 mt-5">Details of your Loose Cargo (LCL)</h2>
+                <h2 class="text-h5 mt-5 px-3">Details of your Loose Cargo (LCL)</h2>
                 <LCL_FORM />
               </v-tabs-window-item>
 

@@ -1,7 +1,7 @@
 
 
 <template>
-  <v-form ref="Regform" lazy-validation class="mt-6 loginForm">
+  <v-form ref="form" v-model="isFormValid" class="loginForm mt-6">
 
     <!-- STEP#1 FIELDS -->
     <template v-if="step === 1">
@@ -10,6 +10,7 @@
           <v-text-field
             v-model="guest_name"
             label="Full Name or Company Name"
+            :rules="nameRules"
             required
             density="compact"
             variant="filled"
@@ -22,6 +23,7 @@
           <v-autocomplete
               v-model="dni_ruc_option"
               :items="DNI_RUC"
+              :rules="dniRucOptionRules"
               density="compact"
               variant="filled"
               placeholder="DNI or RUC (As applicable)"
@@ -37,6 +39,7 @@
           <v-text-field
             v-model="dni_ruc_value"
             label="Enter your DNI or RUC"
+            :rules="dniRucRules"
             required
             density="compact"
             variant="filled"
@@ -62,6 +65,7 @@
         <v-col style="padding: 5px" cols="12" sm="6">
           <v-text-field
             v-model="guest_phone"
+            :rules="phoneRules"
             label="Enter your phone number"
             required
             density="compact"
@@ -74,6 +78,7 @@
         <v-col style="padding: 5px;" cols="12">
           <v-text-field
             v-model="guest_address"
+            :rules="addressRules"
             label="Enter your address"
             required
             density="compact"
@@ -92,6 +97,7 @@
           <v-autocomplete
               v-model="measurement_unit"
               :items="measurementUnits"
+              :rules="measurementUnitRules"
               class="mx-auto"
               density="compact"
               placeholder="Unidad de medida TEU"
@@ -110,6 +116,7 @@
           <v-autocomplete
               v-model="type_of_merchandise"
               :items="merchandiseTypes"
+              :rules="merchandiseTypeRules"
               class="mx-auto"
               density="compact"
               placeholder="Tipo de mercancía"
@@ -128,6 +135,7 @@
         <v-col style="padding: 5px" cols="12" sm="6">
           <v-text-field
             v-model="invoice_price"
+            :rules="invoicePriceRules"
             density="compact"
             hide-details="auto"
             type="number"
@@ -140,6 +148,7 @@
           <v-autocomplete
               v-model="origin_port"
               :items="originPorts"
+              :rules="originPortRules"
               class="mx-auto"
               density="compact"
               placeholder="Puerto de origen (POL)"
@@ -159,6 +168,7 @@
           <v-autocomplete
               v-model="first_import"
               :items="first_imports"
+              :rules="firstImportRules"
               class="mx-auto"
               density="compact"
               placeholder="Primera importación"
@@ -176,6 +186,7 @@
           <v-autocomplete
               v-model="destination_location"
               :items="destinationLocations"
+              :rules="destinationLocationRules"
               class="mx-auto"
               density="compact"
               placeholder="Ubicación en Perú"
@@ -195,6 +206,7 @@
           <v-autocomplete
               v-model="incoterm"
               :items="incoterms"
+              :rules="incotermRules"
               class="mx-auto"
               density="compact"
               placeholder="Incoterm"
@@ -217,10 +229,10 @@
         <v-btn color="secondary" block variant="flat" size="large" @click="step--">Back</v-btn>
       </v-col>
       <v-col cols="12" v-if="step === 1">
-        <v-btn color="secondary" block variant="flat" size="large" @click="step++">Next</v-btn>
+        <v-btn color="secondary" block variant="flat" size="large" :disabled="!isFormValid" @click="next()">Next</v-btn>
       </v-col>
       <v-col cols="6" v-if="step === 2">
-        <v-btn color="secondary" block variant="flat" size="large" :loading="loading" @click="downloadPdf()">Calcular</v-btn>
+        <v-btn color="secondary" block variant="flat" size="large" :disabled="!isFormValid" :loading="loading" @click="downloadPdf()">Calcular</v-btn>
       </v-col>
     </v-row>
   </v-form>
@@ -372,11 +384,29 @@ const first_imports = ref<Constant1[]>([
   {id: "2", name: 'NO', code: ''},
 ]);
 
-const Regform = ref();
 const emailRules = ref([(v: string) => !!v || 'E-mail is required', (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid']);
+const nameRules = ref([(v: string) => !!v || 'Name is required']);
+const dniRucRules = ref([(v: string) => !!v || 'DNI or RUC is required']);
+const phoneRules = ref([(v: string) => !!v || 'Phone number is required']);
+const addressRules = ref([(v: string) => !!v || 'Address is required']);
+const dniRucOptionRules = ref([(v: string) => !!v || "dniRucOption is required"])
+const measurementUnitRules = ref([(v: string) => !!v || 'measurementUnit is required']);
+const merchandiseTypeRules = ref([(v: string) => !!v || 'merchandiseType is required']);
+const invoicePriceRules = ref([(v: string) => !!v || 'invoicePrice is required']);
+const originPortRules = ref([(v: string) => !!v || 'originPort is required']);
+const firstImportRules = ref([(v: string) => !!v || 'firstImport is required']);
+const destinationLocationRules = ref([(v: string) => !!v || 'destinationLocation is required']);
+const incotermRules = ref([(v: string) => !!v || 'incoterm is required']);
 
-function validate() {
-  Regform.value.validate();
+const form = ref(); // Form reference
+const isFormValid = ref(false); // Form validation status
+
+function next() {
+  form.value.validate().then((success: boolean) => {
+    if (success) {
+      step.value++;
+    }
+  });
 }
 
 
