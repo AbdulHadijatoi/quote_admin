@@ -6,7 +6,7 @@
     <!-- STEP#1 FIELDS -->
     <template v-if="step === 1">
       <v-row>
-        <v-col style="padding: 5px; margin: 0px" cols="6">
+        <v-col style="padding: 5px; margin: 0px" cols="12">
           <v-text-field
             v-model="guest_name"
             label="Full Name or Company Name"
@@ -35,7 +35,7 @@
               hide-details="auto"
             ></v-autocomplete>
         </v-col>
-        <v-col style="padding: 5px" cols="12" sm="12">
+        <v-col style="padding: 5px" cols="12" sm="6">
           <v-text-field
             v-model="dni_ruc_value"
             label="Enter your DNI or RUC"
@@ -75,18 +75,6 @@
           ></v-text-field>
         </v-col>
   
-        <v-col style="padding: 5px;" cols="12">
-          <v-text-field
-            v-model="guest_address"
-            :rules="addressRules"
-            label="Enter your address"
-            required
-            density="compact"
-            variant="filled"
-            hide-details="auto"
-            color="secondary"
-          ></v-text-field>
-        </v-col>
       </v-row>
     </template>
 
@@ -221,6 +209,20 @@
               return-object
             ></v-autocomplete>
         </v-col>
+
+        <v-col style="padding: 5px;" cols="6">
+          <v-text-field
+            v-model="guest_address"
+            :rules="addressRules"
+            label="Enter your address"
+            required
+            density="compact"
+            variant="filled"
+            hide-details="auto"
+            color="secondary"
+          ></v-text-field>
+        </v-col>
+        
       </v-row>
     </template>
 
